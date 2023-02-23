@@ -1,4 +1,5 @@
-import 'package:ecoplants/view/widgets/carousel_page.dart';
+import 'package:ecoplants/utils.dart';
+import 'package:ecoplants/view/carousel_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'EcoPlants',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Utils.primaryColor,
         ),
         home: CarouselPage());
   }
