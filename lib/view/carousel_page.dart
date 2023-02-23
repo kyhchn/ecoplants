@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -71,7 +72,7 @@ class CarouselPage extends StatelessWidget {
                                     RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)))),
-                            onPressed: () {},
+                            onPressed: () => Get.toNamed(Routes.getLoginRoute()),
                             child: const Text(
                               'Masuk',
                               style: TextStyle(fontSize: 16),
