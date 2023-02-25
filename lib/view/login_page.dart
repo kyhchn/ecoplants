@@ -1,3 +1,4 @@
+import 'package:ecoplants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +25,8 @@ class LoginPage extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   'hai! Selamat datang!',
                   style: TextStyle(fontSize: 20),
                 ),
@@ -41,23 +42,26 @@ class LoginPage extends StatelessWidget {
                   'Username atau Email',
                   style: TextStyle(fontSize: 14),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: _emailEditingControlller.value,
-                  style: TextStyle(fontSize: 15),
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(15),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10)),
-                      fillColor: Colors.grey.withOpacity(0.5),
-                      filled: true),
+                SizedBox(
+                  height: 35,
+                  child: TextField(
+                    controller: _emailEditingControlller.value,
+                    style: const TextStyle(fontSize: 15),
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(15),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)),
+                        fillColor: Colors.grey.withOpacity(0.5),
+                        filled: true),
+                  ),
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Column(
@@ -67,18 +71,21 @@ class LoginPage extends StatelessWidget {
                   'Kata Sandi',
                   style: TextStyle(fontSize: 14),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: _passwordEditingController.value,
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(15),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10)),
-                      fillColor: Colors.grey.withOpacity(0.5),
-                      filled: true),
+                SizedBox(
+                  height: 35,
+                  child: TextField(
+                    controller: _passwordEditingController.value,
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(15),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)),
+                        fillColor: Colors.grey.withOpacity(0.5),
+                        filled: true),
+                  ),
                 )
               ],
             ),
@@ -103,11 +110,11 @@ class LoginPage extends StatelessWidget {
                     child: ElevatedButton(
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(vertical: 12)),
+                                const EdgeInsets.symmetric(vertical: 12)),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
-                        onPressed: () {},
+                        onPressed: () => Get.toNamed(Routes.getHomePageRoute()),
                         child: const Text(
                           'Masuk',
                           style: TextStyle(
@@ -121,7 +128,7 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(fontSize: 10),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () => Get.toNamed(Routes.register),
                         child: const Text(
                           'Daftar',
                           style: TextStyle(fontSize: 10),
