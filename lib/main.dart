@@ -1,6 +1,5 @@
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
-import 'package:ecoplants/view/carousel_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecoplants/routes.dart';
+import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,26 +68,31 @@ class CarouselPage extends StatelessWidget {
                         child: ElevatedButton(
                             style: ButtonStyle(
                                 padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(vertical: 12)),
+                                    const EdgeInsets.symmetric(vertical: 12)),
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)))),
-                            onPressed: () => Get.toNamed(Routes.getLoginRoute()),
+                            onPressed: () =>
+                                Get.toNamed(Routes.getLoginRoute()),
                             child: const Text(
                               'Masuk',
-                              style: TextStyle(fontSize: 16),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             )),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Jika belum memiliki akun'),
+                          const Text(
+                            'Jika belum memiliki akun',
+                            style: TextStyle(fontSize: 10),
+                          ),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () => Get.toNamed(Routes.register),
                               child: const Text(
                                 'Daftar',
-                                style: TextStyle(color: Colors.green),
+                                style: TextStyle(fontSize: 10),
                               ))
                         ],
                       )
@@ -103,42 +109,56 @@ class CarouselPage extends StatelessWidget {
                   },
                 )),
           ),
-          Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green, width: 1),
-                      color:
-                          _index.value == 0 ? Colors.transparent : Colors.green,
-                      shape: BoxShape.circle),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green, width: 1),
-                      color:
-                          _index.value == 1 ? Colors.transparent : Colors.green,
-                      shape: BoxShape.circle),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green, width: 1),
-                      color:
-                          _index.value == 2 ? Colors.transparent : Colors.green,
-                      shape: BoxShape.circle),
-                ),
-              ],
-            ),
+          OnboardingIndicator(index: _index),
+        ],
+      ),
+    );
+  }
+}
+
+class OnboardingIndicator extends StatelessWidget {
+  const OnboardingIndicator({
+    super.key,
+    required RxInt index,
+  }) : _index = index;
+
+  final RxInt _index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            height: 20,
+            width: 20,
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Utils.primaryColor),
+                color:
+                    _index.value == 0 ? Colors.transparent : Utils.primaryColor,
+                shape: BoxShape.circle),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            height: 20,
+            width: 20,
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Utils.primaryColor),
+                color:
+                    _index.value == 1 ? Colors.transparent : Utils.primaryColor,
+                shape: BoxShape.circle),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            height: 20,
+            width: 20,
+            decoration: BoxDecoration(
+                border: Border.all(color: Utils.primaryColor, width: 1),
+                color:
+                    _index.value == 2 ? Colors.transparent : Utils.primaryColor,
+                shape: BoxShape.circle),
           ),
         ],
       ),
