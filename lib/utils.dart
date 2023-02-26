@@ -13,4 +13,6 @@ class Utils {
     800: Color.fromRGBO(4, 131, 184, .9),
     900: Color.fromRGBO(4, 131, 184, 1),
   });
+
+  static const Color turquoise = Color(0xFF4A9C80);
 }
