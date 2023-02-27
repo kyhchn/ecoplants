@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
 import 'package:ecoplants/view/widgets/top_card.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'widgets/stack_icon.dart';
+import 'widgets/custom_appbar.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -19,62 +20,19 @@ class HomePage extends StatelessWidget {
     'assets/images/banner.png',
     'assets/images/banner.png'
   ];
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Utils.primaryColor,
-      appBar: AppBar(
-        titleSpacing: 0,
-        leading: IconButton(
-            onPressed: () {},
-            icon: Image.asset('assets/images/logoWithoutText.png')),
-        title: SizedBox(
-          width: size.width * 0.5,
-          height: 25,
-          child: TextField(
-            style: const TextStyle(fontSize: 10),
-            textAlignVertical: TextAlignVertical.center,
-            controller: _searchController.value,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(top: 10, bottom: 0),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-                floatingLabelAlignment: FloatingLabelAlignment.center,
-                hintText: 'Cari tanaman favorit',
-                hintStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.5), fontSize: 10),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none),
-                fillColor: Colors.white,
-                filled: true),
-          ),
-        ),
-        actionsIconTheme: const IconThemeData(size: 22),
-        actions: [
-          StackIcon(iconData: Icons.email_outlined, quantity: 5),
-          const SizedBox(
-            width: 10,
-          ),
-          StackIcon(iconData: Icons.notifications_none_outlined, quantity: 5),
-          const SizedBox(
-            width: 10,
-          ),
-          StackIcon(
-              iconData: Icons.shopping_cart_checkout_outlined, quantity: 5),
-          const SizedBox(
-            width: 10,
-          ),
-          const Icon(Icons.menu),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
-        elevation: 0,
+      appBar: CustomAppBar(
+        leadingOnPressed: () {},
+        image: Image.asset('assets/images/logoWithoutText.png'),
+        onSubmitted: (str) =>
+            Get.toNamed(Routes.search, arguments: {'search': str}),
+        size: size,
+        searchController: _searchController,
+        appBar: AppBar(),
       ),
       body: ListView(
         children: [
