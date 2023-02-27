@@ -18,20 +18,18 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: Utils.turquoise.withOpacity(0.3),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2)),
-                    ],
-                    color: Utils.turquoise.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(10)),
-              ),
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Utils.turquoise.withOpacity(0.3),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2)),
+                  ],
+                  color: Utils.turquoise.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(10)),
             ),
             Positioned(
                 top: 30, child: Image.asset('assets/images/dummy_plant.png')),
