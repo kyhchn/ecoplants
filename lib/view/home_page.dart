@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Utils.primaryColor,
       appBar: CustomAppBar(
         leadingOnPressed: () {},
         image: Image.asset('assets/images/logoWithoutText.png'),
@@ -34,10 +33,135 @@ class HomePage extends StatelessWidget {
         searchController: _searchController,
         appBar: AppBar(),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+      body: Stack(children: [
+        Expanded(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              const SizedBox(
+                height: 110,
+              ),
+              Center(
+                child: Text(
+                  'Semua Event',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Utils.primaryColor,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              CarouselSlider.builder(
+                  itemBuilder: (context, index, realIndex) => Container(
+                        width: size.width * 0.8,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Image.asset(list.elementAt(index)),
+                      ),
+                  itemCount: list.length,
+                  options: CarouselOptions(
+                    viewportFraction: 0.8,
+                    initialPage: list.length ~/ 2,
+                    height: 115,
+                    enableInfiniteScroll: false,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (index, reason) {
+                      _index.value = index;
+                    },
+                  )),
+              const SizedBox(
+                height: 12,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 17),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Populer',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Lihat Semua',
+                              style: TextStyle(
+                                  fontSize: 10, color: Utils.primaryColor),
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    SizedBox(
+                        height: 210,
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => const ProductCard(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          separatorBuilder: (context, index) => const SizedBox(
+                            width: 25,
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Rekomendasi',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Lihat Semua',
+                              style: TextStyle(
+                                  fontSize: 10, color: Utils.primaryColor),
+                            ))
+                      ],
+                    ),
+                    GridView.builder(
+                      itemBuilder: (context, index) => const ProductCard(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 9,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 20,
+                              childAspectRatio: 0.75,
+                              crossAxisSpacing: 25,
+                              crossAxisCount: 2),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+              color: Utils.primaryColor,
+              borderRadius: const BorderRadiusDirectional.only(
+                  bottomEnd: Radius.circular(20),
+                  bottomStart: Radius.circular(20))),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -56,135 +180,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Event Donasi Lingkungan',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Utils.primaryColor,
-                      fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CarouselSlider.builder(
-                    itemBuilder: (context, index, realIndex) => Container(
-                          width: size.width * 0.8,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Image.asset(list.elementAt(index)),
-                        ),
-                    itemCount: list.length,
-                    options: CarouselOptions(
-                      viewportFraction: 0.8,
-                      initialPage: list.length ~/ 2,
-                      height: 115,
-                      enableInfiniteScroll: false,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (index, reason) {
-                        _index.value = index;
-                      },
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Populer',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 14),
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Lihat Semua',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.black),
-                              ))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                          height: 210,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                const ProductCard(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              width: 25,
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Rekomendasi',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 14),
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Lihat Semua',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.black),
-                              ))
-                        ],
-                      ),
-                      SizedBox(
-                          height: 210,
-                          child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                const ProductCard(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              width: 25,
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+      ]),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           items: [

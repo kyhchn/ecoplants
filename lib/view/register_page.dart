@@ -1,18 +1,16 @@
+import 'package:ecoplants/controller/register_controller.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
-  final _emailEditingControlller = TextEditingController().obs;
-  final _passwordEditingController = TextEditingController().obs;
-  final _usernameEditingController = TextEditingController().obs;
-  final _verifPasswordEditingController = TextEditingController().obs;
-  final _isAgree = false.obs;
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(RegisterController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -54,7 +52,8 @@ class RegisterPage extends StatelessWidget {
                   height: 10,
                 ),
                 InputField(
-                    usernameEditingController: _usernameEditingController),
+                    textEditingController:
+                        controller.usernameEditingController),
               ],
             ),
             const SizedBox(
@@ -70,7 +69,9 @@ class RegisterPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                InputField(usernameEditingController: _emailEditingControlller)
+                InputField(
+                  textEditingController: controller.emailEditingControlller,
+                )
               ],
             ),
             const SizedBox(
@@ -87,7 +88,8 @@ class RegisterPage extends StatelessWidget {
                   height: 10,
                 ),
                 InputField(
-                    usernameEditingController: _passwordEditingController)
+                  textEditingController: controller.passwordEditingController,
+                )
               ],
             ),
             const SizedBox(
@@ -104,7 +106,9 @@ class RegisterPage extends StatelessWidget {
                   height: 10,
                 ),
                 InputField(
-                    usernameEditingController: _verifPasswordEditingController)
+                  textEditingController:
+                      controller.verifPasswordEditingController,
+                )
               ],
             ),
             Row(
@@ -112,10 +116,10 @@ class RegisterPage extends StatelessWidget {
               children: [
                 Obx(
                   () => Checkbox(
-                      value: _isAgree.value,
+                      value: controller.isAgree.value,
                       activeColor: Utils.primaryColor,
                       onChanged: (val) {
-                        _isAgree.value = val!;
+                        controller.isAgree.value = val!;
                       }),
                 ),
                 Expanded(
@@ -148,7 +152,9 @@ class RegisterPage extends StatelessWidget {
                             const EdgeInsets.symmetric(vertical: 12)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)))),
-                    onPressed: () {},
+                    onPressed: controller.isValid()
+                        ? () => Get.offAllNamed(Routes.homepage)
+                        : null,
                     child: const Text(
                       'Daftar',
                       style:
@@ -162,29 +168,26 @@ class RegisterPage extends StatelessWidget {
 }
 
 class InputField extends StatelessWidget {
+  final TextEditingController textEditingController;
   const InputField({
     super.key,
-    required Rx<TextEditingController> usernameEditingController,
-  }) : _usernameEditingController = usernameEditingController;
-
-  final Rx<TextEditingController> _usernameEditingController;
+    required this.textEditingController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SizedBox(
-        height: 35,
-        child: TextField(
-          controller: _usernameEditingController.value,
-          style: const TextStyle(fontSize: 14),
-          decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(10),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10)),
-              fillColor: Colors.grey.withOpacity(0.5),
-              filled: true),
-        ),
+    return SizedBox(
+      height: 35,
+      child: TextField(
+        controller: textEditingController,
+        style: const TextStyle(fontSize: 14),
+        decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(10),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(10)),
+            fillColor: Colors.grey.withOpacity(0.5),
+            filled: true),
       ),
     );
   }

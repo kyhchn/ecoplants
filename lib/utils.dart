@@ -15,4 +15,5 @@ class Utils {
   });
 
   static const Color turquoise = Color(0xFF4A9C80);
+  static const Color grey = Color(0xFFD9D9D9);
 }

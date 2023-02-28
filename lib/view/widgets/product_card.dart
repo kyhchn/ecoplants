@@ -35,6 +35,8 @@ class ProductCard extends StatelessWidget {
                 top: 30, child: Image.asset('assets/images/dummy_plant.png')),
             Positioned(
               bottom: 0,
+              right: 0,
+              left: 0,
               child: Container(
                 height: 70,
                 width: 155,

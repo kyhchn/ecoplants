@@ -1,15 +1,15 @@
+import 'package:ecoplants/controller/login_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-  final _emailEditingControlller = TextEditingController().obs;
-  final _passwordEditingController = TextEditingController().obs;
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(LoginController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -48,7 +48,8 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 35,
                   child: TextField(
-                    controller: _emailEditingControlller.value,
+                    controller: controller.emailEditingController,
+                    keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(fontSize: 15),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(15),
@@ -77,7 +78,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 35,
                   child: TextField(
-                    controller: _passwordEditingController.value,
+                    controller: controller.passwordEditingController,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(15),
                         border: OutlineInputBorder(
@@ -114,7 +115,9 @@ class LoginPage extends StatelessWidget {
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
-                        onPressed: () => Get.toNamed(Routes.getHomePageRoute()),
+                        onPressed: controller.isValid()
+                            ? () => Get.offAllNamed(Routes.getHomePageRoute())
+                            : null,
                         child: const Text(
                           'Masuk',
                           style: TextStyle(

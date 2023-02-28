@@ -31,23 +31,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: image),
       title: SizedBox(
         width: size.width * 0.5,
-        height: 25,
+        height: 37,
         child: TextField(
-          style: const TextStyle(fontSize: 10),
+          style: const TextStyle(fontSize: 12),
           textInputAction: TextInputAction.search,
           onSubmitted: onSubmitted,
           textAlignVertical: TextAlignVertical.center,
           controller: _searchController.value,
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(top: 10, bottom: 0),
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.search,
-                color: Colors.black.withOpacity(0.5),
+                size: 20,
+                color: Colors.black,
               ),
+              prefixIconConstraints: const BoxConstraints(minWidth: 30),
               floatingLabelAlignment: FloatingLabelAlignment.center,
-              hintText: 'Cari tanaman favorit',
+              hintText: 'Cari Tanaman',
               hintStyle:
-                  TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 10),
+                  TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none),
