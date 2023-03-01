@@ -1,6 +1,8 @@
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
@@ -66,7 +68,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               width: 10,
             ),
             StackIcon(
-                iconData: Icons.shopping_cart_checkout_outlined, quantity: 5),
+              iconData: Icons.shopping_cart_outlined,
+              quantity: 5,
+              onPressed: () => Get.toNamed(Routes.cart),
+            ),
             const SizedBox(
               width: 10,
             ),

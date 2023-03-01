@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 
 class StackIcon extends StatelessWidget {
   IconData iconData;
+  void Function()? onPressed;
   int quantity;
-  StackIcon({super.key, required this.quantity, required this.iconData});
+  StackIcon(
+      {super.key,
+      required this.quantity,
+      required this.iconData,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Stack(
         children: [
-          Icon(iconData),
+          GestureDetector(
+            onTap: onPressed,
+            behavior: HitTestBehavior.translucent,
+            child: Icon(iconData),
+          ),
           Positioned(
             top: 0,
             right: 0,
