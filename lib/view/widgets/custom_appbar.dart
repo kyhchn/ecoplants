@@ -1,49 +1,45 @@
+import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
   void Function(String) onSubmitted;
-  final Widget image;
-  void Function() leadingOnPressed;
+  Color? textFieldColor;
+  Widget? leadingWidget;
+
   CustomAppBar({
     super.key,
-    required this.size,
+    this.textFieldColor,
     required this.appBar,
-    required this.leadingOnPressed,
-    required this.image,
     required this.onSubmitted,
-    required Rx<TextEditingController> searchController,
+    this.leadingWidget,
+    required TextEditingController searchController,
   }) : _searchController = searchController;
 
-  final Size size;
-  final Rx<TextEditingController> _searchController;
+  final TextEditingController _searchController;
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      titleSpacing: 0,
-      leading: IconButton(
-          onPressed: leadingOnPressed,
-          splashColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: image),
+      leading: leadingWidget,
+      centerTitle: false,
+      backgroundColor: appBar.backgroundColor ?? Utils.primaryColor,
+      titleSpacing: 10,
       title: SizedBox(
-        width: size.width * 0.5,
+        width: double.infinity,
         height: 37,
         child: TextField(
           style: const TextStyle(fontSize: 12),
           textInputAction: TextInputAction.search,
           onSubmitted: onSubmitted,
           textAlignVertical: TextAlignVertical.center,
-          controller: _searchController.value,
+          controller: _searchController,
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(top: 10, bottom: 0),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.search,
                 size: 20,
-                color: Colors.black,
+                color: Colors.black.withOpacity(0.5),
               ),
               prefixIconConstraints: const BoxConstraints(minWidth: 30),
               floatingLabelAlignment: FloatingLabelAlignment.center,
@@ -53,29 +49,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none),
-              fillColor: Colors.white,
+              fillColor: textFieldColor ?? Colors.white,
               filled: true),
         ),
       ),
-      actionsIconTheme: const IconThemeData(size: 22),
-      actions: [
-        StackIcon(iconData: Icons.email_outlined, quantity: 5),
-        const SizedBox(
-          width: 10,
-        ),
-        StackIcon(iconData: Icons.notifications_none_outlined, quantity: 5),
-        const SizedBox(
-          width: 10,
-        ),
-        StackIcon(iconData: Icons.shopping_cart_checkout_outlined, quantity: 5),
-        const SizedBox(
-          width: 10,
-        ),
-        const Icon(Icons.menu),
-        const SizedBox(
-          width: 10,
-        ),
-      ],
+      actionsIconTheme:
+          appBar.actionsIconTheme ?? const IconThemeData(size: 22),
+      actions: appBar.actions ??
+          [
+            StackIcon(iconData: Icons.email_outlined, quantity: 5),
+            const SizedBox(
+              width: 10,
+            ),
+            StackIcon(iconData: Icons.notifications_none_outlined, quantity: 5),
+            const SizedBox(
+              width: 10,
+            ),
+            StackIcon(
+                iconData: Icons.shopping_cart_checkout_outlined, quantity: 5),
+            const SizedBox(
+              width: 10,
+            ),
+            const Icon(Icons.menu),
+            const SizedBox(
+              width: 10,
+            ),
+          ],
       elevation: 0,
     );
   }

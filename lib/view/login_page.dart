@@ -116,7 +116,7 @@ class LoginPage extends StatelessWidget {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
                         onPressed: controller.isValid()
-                            ? () => Get.offAllNamed(Routes.getHomePageRoute())
+                            ? () => Get.offAllNamed(Routes.homepage)
                             : null,
                         child: const Text(
                           'Masuk',

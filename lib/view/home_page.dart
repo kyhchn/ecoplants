@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
@@ -13,8 +14,6 @@ import 'widgets/custom_appbar.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final _searchController = TextEditingController().obs;
-  final _index = 0.obs;
   final list = [
     'assets/images/banner.png',
     'assets/images/banner.png',
@@ -23,136 +22,135 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(HomeController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        leadingOnPressed: () {},
-        image: Image.asset('assets/images/logoWithoutText.png'),
-        onSubmitted: (str) =>
-            Get.toNamed(Routes.search, arguments: {'search': str}),
-        size: size,
-        searchController: _searchController,
+        onSubmitted: (str) {
+          controller.searchController.text = '';
+          Get.toNamed(Routes.search, arguments: {'search': str});
+        },
+        searchController: controller.searchController,
         appBar: AppBar(),
       ),
       body: Stack(children: [
-        Expanded(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              const SizedBox(
-                height: 110,
+        ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            const SizedBox(
+              height: 110,
+            ),
+            Center(
+              child: Text(
+                'Semua Event',
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Utils.primaryColor,
+                    fontWeight: FontWeight.w500),
               ),
-              Center(
-                child: Text(
-                  'Semua Event',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Utils.primaryColor,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              CarouselSlider.builder(
-                  itemBuilder: (context, index, realIndex) => Container(
-                        width: size.width * 0.8,
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Image.asset(list.elementAt(index)),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            CarouselSlider.builder(
+                itemBuilder: (context, index, realIndex) => Container(
+                      width: size.width * 0.8,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Image.asset(list.elementAt(index)),
+                    ),
+                itemCount: list.length,
+                options: CarouselOptions(
+                  viewportFraction: 0.8,
+                  initialPage: list.length ~/ 2,
+                  height: 115,
+                  enableInfiniteScroll: false,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index, reason) {
+                    controller.index.value = index;
+                  },
+                )),
+            const SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Populer',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 14),
                       ),
-                  itemCount: list.length,
-                  options: CarouselOptions(
-                    viewportFraction: 0.8,
-                    initialPage: list.length ~/ 2,
-                    height: 115,
-                    enableInfiniteScroll: false,
-                    scrollDirection: Axis.horizontal,
-                    onPageChanged: (index, reason) {
-                      _index.value = index;
-                    },
-                  )),
-              const SizedBox(
-                height: 12,
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Lihat Semua',
+                            style: TextStyle(
+                                fontSize: 10, color: Utils.primaryColor),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  SizedBox(
+                      height: 210,
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => const ProductCard(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          width: 25,
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Rekomendasi',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 14),
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Lihat Semua',
+                            style: TextStyle(
+                                fontSize: 10, color: Utils.primaryColor),
+                          ))
+                    ],
+                  ),
+                  GridView.builder(
+                    itemBuilder: (context, index) => const ProductCard(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 9,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 20,
+                            childAspectRatio: 0.75,
+                            crossAxisSpacing: 25,
+                            crossAxisCount: 2),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 17),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Populer',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14),
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Lihat Semua',
-                              style: TextStyle(
-                                  fontSize: 10, color: Utils.primaryColor),
-                            ))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    SizedBox(
-                        height: 210,
-                        child: ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => const ProductCard(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          separatorBuilder: (context, index) => const SizedBox(
-                            width: 25,
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Rekomendasi',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14),
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Lihat Semua',
-                              style: TextStyle(
-                                  fontSize: 10, color: Utils.primaryColor),
-                            ))
-                      ],
-                    ),
-                    GridView.builder(
-                      itemBuilder: (context, index) => const ProductCard(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 9,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 20,
-                              childAspectRatio: 0.75,
-                              crossAxisSpacing: 25,
-                              crossAxisCount: 2),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
         Container(
           decoration: BoxDecoration(
@@ -190,7 +188,7 @@ class HomePage extends StatelessWidget {
                   'assets/svg/home.svg',
                   height: 25,
                   width: 25,
-                  color: _index.value == 0
+                  color: controller.index.value == 0
                       ? Utils.primaryColor
                       : Colors.grey.withOpacity(0.9),
                 ),
@@ -200,7 +198,8 @@ class HomePage extends StatelessWidget {
                   'assets/svg/donasi.svg',
                   height: 25,
                   width: 25,
-                  color: _index.value == 1 ? Utils.primaryColor : null,
+                  color:
+                      controller.index.value == 1 ? Utils.primaryColor : null,
                 ),
                 label: 'Donasi'),
             BottomNavigationBarItem(
@@ -208,7 +207,7 @@ class HomePage extends StatelessWidget {
                   'assets/svg/profil.svg',
                   height: 25,
                   width: 25,
-                  color: _index.value == 2
+                  color: controller.index.value == 2
                       ? Utils.primaryColor
                       : Colors.grey.withOpacity(0.9),
                 ),
@@ -218,14 +217,15 @@ class HomePage extends StatelessWidget {
                   'assets/svg/transaksi.svg',
                   height: 25,
                   width: 25,
-                  color: _index.value == 3 ? Utils.primaryColor : null,
+                  color:
+                      controller.index.value == 3 ? Utils.primaryColor : null,
                 ),
                 label: 'Profile'),
           ],
           onTap: (val) {
-            _index.value = val;
+            controller.index.value = val;
           },
-          currentIndex: _index.value,
+          currentIndex: controller.index.value,
           type: BottomNavigationBarType.fixed,
         ),
       ),
