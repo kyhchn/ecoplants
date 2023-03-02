@@ -1,6 +1,8 @@
 import 'package:ecoplants/controller/register_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
+import 'package:ecoplants/view/widgets/checkbox.dart';
+import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,186 +11,209 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final controller = Get.put(RegisterController());
+    final controller = RegisterController.i;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.fromLTRB(50, 100, 50, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/logo.png'),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-            Row(
+          child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Expanded(
-                  child: Text(
-                    'hai! ayo buat akunmu bersama.',
-                    style: TextStyle(fontSize: 20),
-                    softWrap: false,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'Username',
-                  style: TextStyle(fontSize: 14),
-                ),
+                Image.asset('assets/images/logo.png'),
                 const SizedBox(
-                  height: 10,
+                  height: 26,
                 ),
-                InputField(
+                const Text(
+                  'hai! ayo buat akunmu bersama.',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+                Utils.verticalSeparator,
+                TextFieldUnObs(
+                    controller: controller,
+                    label: 'Nama Pengguna',
+                    textInputType: TextInputType.text,
                     textEditingController:
                         controller.usernameEditingController),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'E-mail',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InputField(
-                  textEditingController: controller.emailEditingControlller,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Kata Sandi',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InputField(
+                const HintText(content: 'Contoh: narutouciha'),
+                Utils.verticalSeparator,
+                TextFieldUnObs(
+                    controller: controller,
+                    label: 'Email',
+                    textInputType: TextInputType.emailAddress,
+                    textEditingController: controller.emailEditingControlller),
+                const HintText(content: 'Contoh: narutouciha@gmail.com'),
+                Utils.verticalSeparator,
+                TextFieldObs(
+                  controller: controller,
+                  isObs: controller.isObscurePassword,
+                  label: 'Kata Sandi',
                   textEditingController: controller.passwordEditingController,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Konfirmasi Kata Sandi',
-                  style: TextStyle(fontSize: 14),
+                  textInputType: TextInputType.visiblePassword,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InputField(
-                  textEditingController:
-                      controller.verifPasswordEditingController,
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Obx(
-                  () => Checkbox(
-                      value: controller.isAgree.value,
-                      activeColor: Utils.primaryColor,
-                      onChanged: (val) {
-                        controller.isAgree.value = val!;
-                      }),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Expanded(
-                        child: Text(
-                          'saya menerima syarat dan ketentuan yang berlaku.',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w300),
-                          softWrap: false,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                const HintText(content: 'Huruf Kapital'),
+                Utils.verticalSeparator,
+                TextFieldObs(
+                    controller: controller,
+                    isObs: controller.isObscureVerifPassword,
+                    label: 'Konfirmasi Kata Sandi',
+                    textEditingController:
+                        controller.verifPasswordEditingController,
+                    textInputType: TextInputType.visiblePassword),
+                Utils.verticalSeparator,
+                Row(
+                  children: [
+                    CheckBox(isCheck: controller.isAgree),
+                    Expanded(
+                      child: Text(
+                        'Saya menerima syarat dan ketentuan yang berlaku.',
+                        softWrap: true,
+                        style: TextStyle(
+                            fontSize: 12, color: Colors.black.withOpacity(0.5)),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
+                Utils.verticalSeparator,
+                SizedBox(
+                  width: double.infinity,
+                  child: Obx(
+                    () => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16)),
+                        onPressed: controller.isValid.value
+                            ? () => Get.offAllNamed(Routes.homepage)
+                            : null,
+                        child: const Text(
+                          'Daftar',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                )
               ],
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            SizedBox(
-                width: size.width * 0.5,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(vertical: 12)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)))),
-                    onPressed: controller.isValid()
-                        ? () => Get.offAllNamed(Routes.homepage)
-                        : null,
-                    child: const Text(
-                      'Daftar',
+          ),
+          Column(
+            children: [
+              const Spacer(),
+              Container(
+                width: double.infinity,
+                height: 50,
+                decoration: const BoxDecoration(
+                    border:
+                        Border(top: BorderSide(width: 1, color: Utils.grey))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Sudah Punya Akun? ',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    )))
-          ],
-        ),
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
+                    ),
+                    CustomTextButton(
+                      content: 'Masuk',
+                      textStyle: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.w500),
+                      onPressed: () => Get.offAndToNamed(Routes.login),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          )
+        ],
       )),
     );
   }
 }
 
-class InputField extends StatelessWidget {
+class TextFieldObs extends StatelessWidget {
+  TextFieldObs(
+      {super.key,
+      required this.controller,
+      required this.isObs,
+      required this.label,
+      required this.textEditingController,
+      required this.textInputType});
+
+  final RegisterController controller;
   final TextEditingController textEditingController;
-  const InputField({
-    super.key,
-    required this.textEditingController,
-  });
+  final Rx<bool> isObs;
+  final TextInputType textInputType;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 35,
-      child: TextField(
+    return Obx(
+      () => TextField(
         controller: textEditingController,
-        style: const TextStyle(fontSize: 14),
+        onChanged: (value) => controller.validate(),
+        keyboardType: textInputType,
+        obscureText: isObs.value,
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(10),
-            border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10)),
-            fillColor: Colors.grey.withOpacity(0.5),
-            filled: true),
+            suffixIcon: IconButton(
+                onPressed: () {
+                  isObs.value = !isObs.value;
+                },
+                icon: Icon(
+                    isObs.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: isObs.value ? Utils.primaryColor : null)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+            labelStyle: const TextStyle(fontSize: 16),
+            labelText: label),
       ),
+    );
+  }
+}
+
+class HintText extends StatelessWidget {
+  const HintText({super.key, required this.content});
+  final String content;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const SizedBox(
+          width: 16,
+        ),
+        Text(
+          content,
+          style: TextStyle(fontSize: 12, color: Colors.black.withOpacity(0.5)),
+        ),
+      ],
+    );
+  }
+}
+
+class TextFieldUnObs extends StatelessWidget {
+  const TextFieldUnObs(
+      {super.key,
+      required this.controller,
+      required this.textEditingController,
+      required this.textInputType,
+      required this.label});
+
+  final RegisterController controller;
+  final TextEditingController textEditingController;
+  final TextInputType textInputType;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: (value) => controller.validate(),
+      controller: textEditingController,
+      keyboardType: textInputType,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+          labelStyle: const TextStyle(fontSize: 16),
+          labelText: label),
     );
   }
 }

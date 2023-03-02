@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   static LoginController get i => Get.find();
-
+  final isValid = false.obs;
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
+  final isObscure = false.obs;
 
   @override
   void onClose() {
@@ -15,8 +16,8 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  bool isValid() {
-    return passwordEditingController.text.isNotEmpty &&
+  void validate() {
+    isValid.value = passwordEditingController.text.isNotEmpty &&
         EmailValidator.validate(emailEditingController.text);
   }
 }

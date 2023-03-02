@@ -1,3 +1,8 @@
+import 'package:ecoplants/bindings/carousel_binding.dart';
+import 'package:ecoplants/bindings/cart_binding.dart';
+import 'package:ecoplants/bindings/home_binding.dart';
+import 'package:ecoplants/bindings/login_binding.dart';
+import 'package:ecoplants/bindings/register_binding.dart';
 import 'package:ecoplants/view/carousel_page.dart';
 import 'package:ecoplants/view/cart_page.dart';
 import 'package:ecoplants/view/detail_product_page.dart';
@@ -17,12 +22,30 @@ class Routes {
   static String cart = '/cart-page';
 
   static List<GetPage> routes = [
-    GetPage(name: carousel, page: () => CarouselPage()),
-    GetPage(name: login, page: () => const LoginPage()),
-    GetPage(name: register, page: () => const RegisterPage()),
-    GetPage(name: homepage, page: () => HomePage()),
+    GetPage(
+        name: carousel, page: () => CarouselPage(), binding: CarouselBinding()),
+    GetPage(
+      name: login,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+        name: register,
+        page: () => const RegisterPage(),
+        binding: RegisterBinding()),
+    GetPage(
+        name: homepage,
+        page: () => HomePage(),
+        binding: HomeBinding(),
+        transition: Transition.native,
+        transitionDuration: const Duration(milliseconds: 500)),
     GetPage(name: search, page: () => SearchPage()),
     GetPage(name: detailProduct, page: () => const DetailProductPage()),
-    GetPage(name: cart, page: () => const CartPage())
+    GetPage(
+        name: cart,
+        page: () => const CartPage(),
+        binding: CartBinding(),
+        transition: Transition.native,
+        transitionDuration: const Duration(milliseconds: 500))
   ];
 }

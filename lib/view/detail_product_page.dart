@@ -9,7 +9,12 @@ class DetailProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SearchController>();
+    SearchController controller;
+    try {
+      controller = SearchController.i;
+    } catch (e) {
+      controller = Get.put(SearchController(str: 'detail produk'));
+    }
     return Scaffold(
       appBar: CustomAppBar(
           textFieldColor: const Color(0xFF525A67).withOpacity(0.05),

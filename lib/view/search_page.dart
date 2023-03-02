@@ -25,7 +25,7 @@ class SearchPage extends StatelessWidget {
                 splashColor: Colors.transparent),
             appBar: AppBar(
               actionsIconTheme:
-                  IconThemeData(color: Colors.black.withOpacity(0.5), size: 22),
+                  IconThemeData(color: Colors.black.withOpacity(0.5), size: 24),
               backgroundColor: Colors.white,
               elevation: 0,
               actions: [
@@ -89,9 +89,9 @@ class Body extends StatelessWidget {
             scrollDirection: Axis.vertical,
             itemCount: 20,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 240 / 160,
+                mainAxisExtent: 243,
                 mainAxisSpacing: 20,
-                childAspectRatio: 0.75,
-                crossAxisSpacing: 25,
                 crossAxisCount: 2),
             itemBuilder: (context, index) => const ProductCard(),
           ),

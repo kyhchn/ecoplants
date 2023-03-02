@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final controller = Get.put(HomeController());
+    final controller = HomeController.i;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -62,20 +62,18 @@ class HomePage extends StatelessWidget {
                     ),
                 itemCount: list.length,
                 options: CarouselOptions(
+                  autoPlay: true,
                   viewportFraction: 0.8,
                   initialPage: list.length ~/ 2,
                   height: 115,
                   enableInfiniteScroll: false,
                   scrollDirection: Axis.horizontal,
-                  onPageChanged: (index, reason) {
-                    controller.index.value = index;
-                  },
                 )),
             const SizedBox(
               height: 12,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,16 +98,16 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  SizedBox(
-                      height: 210,
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => const ProductCard(),
+                  CarouselSlider.builder(
+                      itemCount: 9,
+                      itemBuilder: (context, index, realIndex) =>
+                          const ProductCard(),
+                      options: CarouselOptions(
+                        viewportFraction: 0.5,
+                        initialPage: list.length ~/ 2,
+                        aspectRatio: 238 / 160,
+                        enableInfiniteScroll: false,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        separatorBuilder: (context, index) => const SizedBox(
-                          width: 25,
-                        ),
                       )),
                   const SizedBox(
                     height: 12,
@@ -139,9 +137,8 @@ class HomePage extends StatelessWidget {
                     itemCount: 9,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisSpacing: 20,
-                            childAspectRatio: 0.75,
-                            crossAxisSpacing: 25,
+                            childAspectRatio: 240 / 160,
+                            mainAxisExtent: 243,
                             crossAxisCount: 2),
                   ),
                   const SizedBox(
@@ -204,7 +201,7 @@ class HomePage extends StatelessWidget {
                 label: 'Donasi'),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/svg/profil.svg',
+                  'assets/svg/transaksi.svg',
                   height: 25,
                   width: 25,
                   color: controller.index.value == 2
@@ -214,7 +211,7 @@ class HomePage extends StatelessWidget {
                 label: 'Transaksi'),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/svg/transaksi.svg',
+                  'assets/svg/profil.svg',
                   height: 25,
                   width: 25,
                   color:

@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.carousel,
       title: 'EcoPlants',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Poppins',
         primarySwatch: Utils.primaryColor,
       ),

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
+import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,18 +10,16 @@ class CarouselPage extends StatelessWidget {
   final _index = 0.obs;
   @override
   Widget build(BuildContext context) {
+    final carouselController = Get.find<CarouselController>();
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'skip',
-              style: TextStyle(color: Colors.black, fontSize: 16),
-            ),
+          Obx(
+            () => SkipButton(
+                carouselController: carouselController, index: _index.value),
           )
         ],
       ),
@@ -35,6 +34,7 @@ class CarouselPage extends StatelessWidget {
           SizedBox(
             height: size.height * 0.5,
             child: CarouselSlider(
+                carouselController: carouselController,
                 items: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -63,8 +63,9 @@ class CarouselPage extends StatelessWidget {
                       SizedBox(
                         height: size.height * 0.1,
                       ),
-                      SizedBox(
-                        width: size.width * 0.55,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        width: double.infinity,
                         child: ElevatedButton(
                             style: ButtonStyle(
                                 padding: MaterialStateProperty.all(
@@ -72,7 +73,7 @@ class CarouselPage extends StatelessWidget {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(20)))),
+                                            BorderRadius.circular(4)))),
                             onPressed: () => Get.toNamed(Routes.login),
                             child: const Text(
                               'Masuk',
@@ -84,15 +85,14 @@ class CarouselPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Jika belum memiliki akun',
-                            style: TextStyle(fontSize: 10),
+                            'Belum punya akun? ',
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w500),
                           ),
-                          TextButton(
-                              onPressed: () => Get.toNamed(Routes.register),
-                              child: const Text(
-                                'Daftar',
-                                style: TextStyle(fontSize: 10),
-                              ))
+                          CustomTextButton(
+                              content: 'Daftar',
+                              textStyle: const TextStyle(fontSize: 10),
+                              onPressed: () => Get.toNamed(Routes.register))
                         ],
                       )
                     ],
@@ -110,6 +110,28 @@ class CarouselPage extends StatelessWidget {
           ),
           OnboardingIndicator(index: _index),
         ],
+      ),
+    );
+  }
+}
+
+class SkipButton extends StatelessWidget {
+  const SkipButton(
+      {super.key, required this.carouselController, required this.index});
+
+  final CarouselController carouselController;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    if (index == 2) return const SizedBox();
+    return TextButton(
+      onPressed: () {
+        carouselController.animateToPage(2);
+      },
+      child: const Text(
+        'skip',
+        style: TextStyle(color: Colors.black, fontSize: 16),
       ),
     );
   }

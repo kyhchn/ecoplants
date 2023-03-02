@@ -1,5 +1,7 @@
 import 'package:ecoplants/controller/login_controller.dart';
 import 'package:ecoplants/routes.dart';
+import 'package:ecoplants/utils.dart';
+import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,140 +10,139 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final controller = Get.put(LoginController());
+    final controller = LoginController.i;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 110),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/logo.png'),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-            Row(
+          child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Text(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/logo.png'),
+                const SizedBox(
+                  height: 26,
+                ),
+                const Text(
                   'hai! Selamat datang!',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Username atau Email',
-                  style: TextStyle(fontSize: 14),
+                Utils.verticalSeparator,
+                TextField(
+                  onChanged: (value) => controller.validate(),
+                  controller: controller.emailEditingController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4)),
+                      labelStyle: const TextStyle(fontSize: 16),
+                      labelText: 'Nama Pengguna atau Email'),
                 ),
-                const SizedBox(
-                  height: 10,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Text(
+                      'Contoh: narutouciha@gmail.com',
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.black.withOpacity(0.5)),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 35,
-                  child: TextField(
-                    controller: controller.emailEditingController,
-                    keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(fontSize: 15),
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(15),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10)),
-                        fillColor: Colors.grey.withOpacity(0.5),
-                        filled: true),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Kata Sandi',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 35,
-                  child: TextField(
+                Utils.verticalSeparator,
+                Obx(
+                  () => TextField(
                     controller: controller.passwordEditingController,
+                    onChanged: (value) => controller.validate(),
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: controller.isObscure.value,
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(15),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.isObscure.value =
+                                  !controller.isObscure.value;
+                            },
+                            icon: Icon(
+                                controller.isObscure.value
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: controller.isObscure.value
+                                    ? Utils.primaryColor
+                                    : null)),
                         border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10)),
-                        fillColor: Colors.grey.withOpacity(0.5),
-                        filled: true),
+                            borderRadius: BorderRadius.circular(4)),
+                        labelStyle: const TextStyle(fontSize: 16),
+                        labelText: 'Kata Sandi'),
                   ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Lupa kata sandi?',
-                      style: TextStyle(fontSize: 10),
-                    ))
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            Column(
-              children: [
+                ),
+                Utils.verticalSeparator,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Lupa detail login Anda? ',
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.5), fontSize: 12),
+                    ),
+                    CustomTextButton(
+                        content: 'Dapatkan bantuan untuk login',
+                        onPressed: () {},
+                        textStyle: const TextStyle(fontSize: 12))
+                  ],
+                ),
+                Utils.verticalSeparator,
                 SizedBox(
-                    width: size.width * 0.5,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.symmetric(vertical: 12)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)))),
-                        onPressed: controller.isValid()
+                  width: double.infinity,
+                  child: Obx(
+                    () => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16)),
+                        onPressed: controller.isValid.value
                             ? () => Get.offAllNamed(Routes.homepage)
                             : null,
                         child: const Text(
                           'Masuk',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ))),
-                Row(
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              const Spacer(),
+              Container(
+                width: double.infinity,
+                height: 50,
+                decoration: const BoxDecoration(
+                    border:
+                        Border(top: BorderSide(width: 1, color: Utils.grey))),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Jika belum memiliki akun',
-                      style: TextStyle(fontSize: 10),
+                      'Belum punya akun? ',
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
                     ),
-                    TextButton(
-                        onPressed: () => Get.toNamed(Routes.register),
-                        child: const Text(
-                          'Daftar',
-                          style: TextStyle(fontSize: 10),
-                        )),
+                    CustomTextButton(
+                      content: 'Daftar',
+                      onPressed: () => Get.offAndToNamed(Routes.register),
+                      textStyle: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.w500),
+                    )
                   ],
-                )
-              ],
-            )
-          ],
-        ),
+                ),
+              ),
+            ],
+          )
+        ],
       )),
     );
   }

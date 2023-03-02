@@ -9,6 +9,9 @@ class RegisterController extends GetxController {
   final passwordEditingController = TextEditingController();
   final usernameEditingController = TextEditingController();
   final verifPasswordEditingController = TextEditingController();
+  final isValid = false.obs;
+  final isObscurePassword = false.obs;
+  final isObscureVerifPassword = false.obs;
   final isAgree = false.obs;
 
   @override
@@ -21,8 +24,8 @@ class RegisterController extends GetxController {
     super.onClose();
   }
 
-  bool isValid() {
-    return EmailValidator.validate(emailEditingControlller.text) &&
+  void validate() {
+    isValid.value = EmailValidator.validate(emailEditingControlller.text) &&
         passwordEditingController.text.isNotEmpty &&
         usernameEditingController.text.isNotEmpty &&
         (passwordEditingController.text ==

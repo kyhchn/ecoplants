@@ -40,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               contentPadding: const EdgeInsets.only(top: 10, bottom: 0),
               prefixIcon: Icon(
                 Icons.search,
-                size: 20,
+                size: 12,
                 color: Colors.black.withOpacity(0.5),
               ),
               prefixIconConstraints: const BoxConstraints(minWidth: 30),
@@ -49,14 +49,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               hintStyle:
                   TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none),
               fillColor: textFieldColor ?? Colors.white,
               filled: true),
         ),
       ),
       actionsIconTheme:
-          appBar.actionsIconTheme ?? const IconThemeData(size: 22),
+          appBar.actionsIconTheme ?? const IconThemeData(size: 24),
       actions: appBar.actions ??
           [
             StackIcon(iconData: Icons.email_outlined, quantity: 5),
