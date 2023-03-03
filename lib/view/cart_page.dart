@@ -1,6 +1,5 @@
 import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/utils.dart';
-import 'package:ecoplants/view/widgets/checkbox.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +43,12 @@ class CartPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                CheckBox(isCheck: controller.isSelectAll),
+                Checkbox(
+                  value: controller.isSelectAll.value,
+                  onChanged: (value) {
+                    controller.isSelectAll.value = value!;
+                  },
+                ),
                 Text(
                   'Pilih semua',
                   style: TextStyle(
@@ -117,7 +121,7 @@ class CartItem extends StatelessWidget {
         border: Border.all(color: Utils.grey.withOpacity(0.8)),
       ),
       padding: const EdgeInsets.only(right: 12),
-      height: 137,
+      height: 158,
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -126,9 +130,17 @@ class CartItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CheckBox(
-                  isCheck: controller.listCart.elementAt(0)['controller']
-                      as Rx<bool>),
+              Obx(
+                () => Checkbox(
+                  value:
+                      (controller.listCart.elementAt(0)['controller'] as RxBool)
+                          .value,
+                  onChanged: (value) {
+                    (controller.listCart.elementAt(0)['controller'] as RxBool)
+                        .value = value!;
+                  },
+                ),
+              ),
               Column(
                 children: [
                   Row(
@@ -154,20 +166,29 @@ class CartItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CheckBox(
-                  isCheck: controller.listCart.elementAt(0)['controller']
-                      as Rx<bool>),
+              Obx(
+                () => Checkbox(
+                  value:
+                      (controller.listCart.elementAt(0)['controller'] as RxBool)
+                          .value,
+                  onChanged: (value) {
+                    (controller.listCart.elementAt(0)['controller'] as RxBool)
+                        .value = value!;
+                  },
+                ),
+              ),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                        color: Utils.grey.withOpacity(0.3),
-                      )),
-                      width: 80,
-                      height: 70,
+                            color: Utils.grey.withOpacity(0.3),
+                          )),
+                      width: 58,
+                      height: 58,
                       child: Image.asset(
                         'assets/images/dummy_plant.png',
                         fit: BoxFit.contain,
@@ -176,91 +197,86 @@ class CartItem extends StatelessWidget {
                     const SizedBox(
                       width: 8,
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Judul Tanaman',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          const Text(
-                            'RP . 300.000',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomTextButton(
-                                  onPressed: () {},
-                                  content: 'Tulis Catatan',
-                                  textStyle: TextStyle(
-                                      fontSize: 8, color: Utils.primaryColor),
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        CupertinoIcons.trash,
-                                        size: 14,
-                                        color: Colors.black.withOpacity(0.5),
-                                      ),
-                                      splashRadius: 20,
-                                    ),
-                                    Container(
-                                      width: 50,
-                                      height: 16,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              width: 1, color: Utils.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          CustomTextButton(
-                                            onPressed: () {},
-                                            content: '-',
-                                            textStyle: const TextStyle(
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.w500,
-                                                color: Utils.grey),
-                                          ),
-                                          const Text(
-                                            'val',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 8),
-                                          ),
-                                          CustomTextButton(
-                                            onPressed: (){},
-                                            content: '+',
-                                            textStyle: TextStyle(
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.w500,
-                                                color: Utils.primaryColor),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        // ignore: unnecessary_const
+                        const Text(
+                          'Judul Tanaman',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        // ignore: unnecessary_const
+                        const Text(
+                          'RP . 300.000',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ],
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomTextButton(
+                  onPressed: () {},
+                  content: 'Tulis Catatan',
+                  textStyle: TextStyle(fontSize: 10, color: Utils.primaryColor),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        CupertinoIcons.trash,
+                        size: 18,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      splashRadius: 20,
+                    ),
+                    Container(
+                      width: 79,
+                      height: 24,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Utils.grey),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CustomTextButton(
+                            onPressed: () {},
+                            content: '-',
+                            textStyle: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: Utils.grey),
+                          ),
+                          const Text(
+                            'val',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 10),
+                          ),
+                          CustomTextButton(
+                            onPressed: () {},
+                            content: '+',
+                            textStyle: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: Utils.primaryColor),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

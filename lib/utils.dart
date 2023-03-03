@@ -1,4 +1,3 @@
-import 'package:ecoplants/view/widgets/checkbox.dart';
 import 'package:flutter/material.dart';
 
 class Utils {

@@ -13,8 +13,10 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.detailProduct),
       child: Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: BorderSide(color: Colors.black.withOpacity(0.1), width: 1)),
         child: SizedBox(
             height: 240,
             width: 160,

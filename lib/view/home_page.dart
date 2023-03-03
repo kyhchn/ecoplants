@@ -72,13 +72,13 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
@@ -95,24 +95,27 @@ class HomePage extends StatelessWidget {
                           ))
                     ],
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  CarouselSlider.builder(
-                      itemCount: 9,
-                      itemBuilder: (context, index, realIndex) =>
-                          const ProductCard(),
-                      options: CarouselOptions(
-                        viewportFraction: 0.5,
-                        initialPage: list.length ~/ 2,
-                        aspectRatio: 238 / 160,
-                        enableInfiniteScroll: false,
-                        scrollDirection: Axis.horizontal,
-                      )),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Row(
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                CarouselSlider.builder(
+                    itemCount: 9,
+                    itemBuilder: (context, index, realIndex) =>
+                        const ProductCard(),
+                    options: CarouselOptions(
+                      viewportFraction: 0.5,
+                      initialPage: list.length ~/ 2,
+                      aspectRatio: 238 / 160,
+                      enableInfiniteScroll: false,
+                      scrollDirection: Axis.horizontal,
+                    )),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
@@ -129,7 +132,10 @@ class HomePage extends StatelessWidget {
                           ))
                     ],
                   ),
-                  GridView.builder(
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: GridView.builder(
                     itemBuilder: (context, index) => const ProductCard(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -141,11 +147,11 @@ class HomePage extends StatelessWidget {
                             mainAxisExtent: 243,
                             crossAxisCount: 2),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             )
           ],
         ),

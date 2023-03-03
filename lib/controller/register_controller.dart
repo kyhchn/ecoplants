@@ -19,12 +19,11 @@ class RegisterController extends GetxController {
     emailEditingControlller.dispose();
     passwordEditingController.dispose();
     usernameEditingController.dispose();
-    isAgree.close();
     verifPasswordEditingController.dispose();
     super.onClose();
   }
 
-  void validate() {
+  void validate () {
     isValid.value = EmailValidator.validate(emailEditingControlller.text) &&
         passwordEditingController.text.isNotEmpty &&
         usernameEditingController.text.isNotEmpty &&

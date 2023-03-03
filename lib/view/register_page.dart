@@ -1,7 +1,6 @@
 import 'package:ecoplants/controller/register_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
-import 'package:ecoplants/view/widgets/checkbox.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,7 +65,15 @@ class RegisterPage extends StatelessWidget {
                 Utils.verticalSeparator,
                 Row(
                   children: [
-                    CheckBox(isCheck: controller.isAgree),
+                    Obx(
+                      () => Checkbox(
+                        value: controller.isAgree.value,
+                        onChanged: (value) {
+                          controller.isAgree.value = value!;
+                          controller.validate();
+                        },
+                      ),
+                    ),
                     Expanded(
                       child: Text(
                         'Saya menerima syarat dan ketentuan yang berlaku.',
