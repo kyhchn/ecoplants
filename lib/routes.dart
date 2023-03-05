@@ -9,7 +9,7 @@ import 'package:ecoplants/view/detail_product_page.dart';
 import 'package:ecoplants/view/home_page.dart';
 import 'package:ecoplants/view/login_page.dart';
 import 'package:ecoplants/view/register_page.dart';
-import 'package:ecoplants/view/search_page.dart';
+import 'package:ecoplants/view/search_product_page.dart';
 import 'package:get/get.dart';
 
 class Routes {
@@ -39,7 +39,7 @@ class Routes {
         binding: HomeBinding(),
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)),
-    GetPage(name: search, page: () => SearchPage()),
+    GetPage(name: search, page: () => SearchProductPage()),
     GetPage(name: detailProduct, page: () => const DetailProductPage()),
     GetPage(
         name: cart,

@@ -73,7 +73,7 @@ class CarouselPage extends StatelessWidget {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(4)))),
+                                            BorderRadius.circular(10)))),
                             onPressed: () => Get.toNamed(Routes.login),
                             child: const Text(
                               'Masuk',

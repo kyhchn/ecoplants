@@ -18,94 +18,101 @@ class RegisterPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/logo.png'),
-                const SizedBox(
-                  height: 26,
-                ),
-                const Text(
-                  'hai! ayo buat akunmu bersama.',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
-                Utils.verticalSeparator,
-                TextFieldUnObs(
-                    controller: controller,
-                    label: 'Nama Pengguna',
-                    textInputType: TextInputType.text,
-                    textEditingController:
-                        controller.usernameEditingController),
-                const HintText(content: 'Contoh: narutouciha'),
-                Utils.verticalSeparator,
-                TextFieldUnObs(
-                    controller: controller,
-                    label: 'Email',
-                    textInputType: TextInputType.emailAddress,
-                    textEditingController: controller.emailEditingControlller),
-                const HintText(content: 'Contoh: narutouciha@gmail.com'),
-                Utils.verticalSeparator,
-                TextFieldObs(
-                  controller: controller,
-                  isObs: controller.isObscurePassword,
-                  label: 'Kata Sandi',
-                  textEditingController: controller.passwordEditingController,
-                  textInputType: TextInputType.visiblePassword,
-                ),
-                const HintText(content: 'Huruf Kapital'),
-                Utils.verticalSeparator,
-                TextFieldObs(
-                    controller: controller,
-                    isObs: controller.isObscureVerifPassword,
-                    label: 'Konfirmasi Kata Sandi',
-                    textEditingController:
-                        controller.verifPasswordEditingController,
-                    textInputType: TextInputType.visiblePassword),
-                Utils.verticalSeparator,
-                Row(
-                  children: [
-                    Obx(
-                      () => Checkbox(
-                        value: controller.isAgree.value,
-                        onChanged: (value) {
-                          controller.isAgree.value = value!;
-                          controller.validate();
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Saya menerima syarat dan ketentuan yang berlaku.',
-                        softWrap: true,
-                        style: TextStyle(
-                            fontSize: 12, color: Colors.black.withOpacity(0.5)),
-                      ),
-                    )
-                  ],
-                ),
-                Utils.verticalSeparator,
-                SizedBox(
-                  width: double.infinity,
-                  child: Obx(
-                    () => ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16)),
-                        onPressed: controller.isValid.value
-                            ? () => Get.offAllNamed(Routes.homepage)
-                            : null,
-                        child: const Text(
-                          'Daftar',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/logo.png'),
+                  const SizedBox(
+                    height: 26,
                   ),
-                )
-              ],
+                  const Text(
+                    'hai! ayo buat akunmu bersama.',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  Utils.verticalSeparator,
+                  TextFieldUnObs(
+                      controller: controller,
+                      label: 'Nama Pengguna',
+                      textInputType: TextInputType.text,
+                      textEditingController:
+                          controller.usernameEditingController),
+                  const HintText(content: 'Contoh: narutouciha'),
+                  Utils.verticalSeparator,
+                  TextFieldUnObs(
+                      controller: controller,
+                      label: 'Email',
+                      textInputType: TextInputType.emailAddress,
+                      textEditingController:
+                          controller.emailEditingControlller),
+                  const HintText(content: 'Contoh: narutouciha@gmail.com'),
+                  Utils.verticalSeparator,
+                  TextFieldObs(
+                    controller: controller,
+                    isObs: controller.isObscurePassword,
+                    label: 'Kata Sandi',
+                    textEditingController: controller.passwordEditingController,
+                    textInputType: TextInputType.visiblePassword,
+                  ),
+                  const HintText(content: 'Huruf Kapital'),
+                  Utils.verticalSeparator,
+                  TextFieldObs(
+                      controller: controller,
+                      isObs: controller.isObscureVerifPassword,
+                      label: 'Konfirmasi Kata Sandi',
+                      textEditingController:
+                          controller.verifPasswordEditingController,
+                      textInputType: TextInputType.visiblePassword),
+                  Utils.verticalSeparator,
+                  Row(
+                    children: [
+                      Obx(
+                        () => Checkbox(
+                          value: controller.isAgree.value,
+                          onChanged: (value) {
+                            controller.isAgree.value = value!;
+                            controller.validate();
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Saya menerima syarat dan ketentuan yang berlaku.',
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.5)),
+                        ),
+                      )
+                    ],
+                  ),
+                  Utils.verticalSeparator,
+                  SizedBox(
+                    width: double.infinity,
+                    child: Obx(
+                      () => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16)),
+                          onPressed: controller.isValid.value
+                              ? () => Get.offAllNamed(Routes.homepage)
+                              : null,
+                          child: const Text(
+                            'Daftar',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Spacer(),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -159,6 +166,7 @@ class TextFieldObs extends StatelessWidget {
         controller: textEditingController,
         onChanged: (value) => controller.validate(),
         keyboardType: textInputType,
+        style: const TextStyle(color: Colors.black, fontSize: 16),
         obscureText: isObs.value,
         decoration: InputDecoration(
             suffixIcon: IconButton(
@@ -170,8 +178,8 @@ class TextFieldObs extends StatelessWidget {
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
                     color: isObs.value ? Utils.primaryColor : null)),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
-            labelStyle: const TextStyle(fontSize: 16),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            labelStyle: const TextStyle(fontSize: 12),
             labelText: label),
       ),
     );
@@ -217,9 +225,10 @@ class TextFieldUnObs extends StatelessWidget {
       onChanged: (value) => controller.validate(),
       controller: textEditingController,
       keyboardType: textInputType,
+      style: const TextStyle(color: Colors.black, fontSize: 16),
       decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
-          labelStyle: const TextStyle(fontSize: 16),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          labelStyle: const TextStyle(fontSize: 12),
           labelText: label),
     );
   }

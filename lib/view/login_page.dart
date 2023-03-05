@@ -34,11 +34,12 @@ class LoginPage extends StatelessWidget {
                 TextField(
                   onChanged: (value) => controller.validate(),
                   controller: controller.emailEditingController,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                      labelStyle: const TextStyle(fontSize: 16),
+                          borderRadius: BorderRadius.circular(10)),
+                      labelStyle: const TextStyle(fontSize: 12),
                       labelText: 'Nama Pengguna atau Email'),
                 ),
                 Row(
@@ -60,6 +61,7 @@ class LoginPage extends StatelessWidget {
                     controller: controller.passwordEditingController,
                     onChanged: (value) => controller.validate(),
                     keyboardType: TextInputType.visiblePassword,
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                     obscureText: controller.isObscure.value,
                     decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -75,8 +77,8 @@ class LoginPage extends StatelessWidget {
                                     ? Utils.primaryColor
                                     : null)),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4)),
-                        labelStyle: const TextStyle(fontSize: 16),
+                            borderRadius: BorderRadius.circular(10)),
+                        labelStyle: const TextStyle(fontSize: 12),
                         labelText: 'Kata Sandi'),
                   ),
                 ),
@@ -101,6 +103,8 @@ class LoginPage extends StatelessWidget {
                   child: Obx(
                     () => ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             padding: const EdgeInsets.symmetric(vertical: 16)),
                         onPressed: controller.isValid.value
                             ? () => Get.offAllNamed(Routes.homepage)

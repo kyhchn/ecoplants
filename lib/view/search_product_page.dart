@@ -3,11 +3,13 @@ import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_appbar.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class SearchPage extends StatelessWidget {
-  SearchPage({super.key});
+class SearchProductPage extends StatelessWidget {
+  SearchProductPage({super.key});
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchController(str: Get.arguments['search']));
@@ -62,7 +64,54 @@ class SearchPage extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 15,
+              height: 12.5,
+            ),
+            SizedBox(
+              height: 41,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: Colors.black.withOpacity(0.2), width: 1)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/svg/Filter.svg'),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            'Filter',
+                            style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      )),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  LabelItem(content: 'Terbaru'),
+                  LabelItem(content: 'Gratis Ongkir'),
+                  LabelItem(content: 'Official Store'),
+                  LabelItem(content: 'Harga Terendah'),
+                  LabelItem(content: 'Harga Tertinggi'),
+                  LabelItem(content: 'Malang'),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 12,
             ),
             Obx(
               () => Body(
@@ -71,6 +120,28 @@ class SearchPage extends StatelessWidget {
             )
           ],
         ));
+  }
+}
+
+class LabelItem extends StatelessWidget {
+  LabelItem({super.key, required this.content});
+  String content;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      margin: const EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black.withOpacity(0.2), width: 1)),
+      child: Text(
+        content,
+        style: TextStyle(
+            color: Colors.black.withOpacity(0.5),
+            fontSize: 12,
+            fontWeight: FontWeight.w500),
+      ),
+    );
   }
 }
 
