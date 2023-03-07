@@ -1,6 +1,7 @@
 import 'package:ecoplants/controller/login_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
+import 'package:ecoplants/view/home_page.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = LoginController.i;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
@@ -100,19 +102,28 @@ class LoginPage extends StatelessWidget {
                 Utils.verticalSeparator,
                 SizedBox(
                   width: double.infinity,
+                  height: 44,
                   child: Obx(
                     () => ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            padding: const EdgeInsets.symmetric(vertical: 16)),
+                            padding: const EdgeInsets.symmetric(vertical: 10)),
+
                         onPressed: controller.isValid.value
-                            ? () => Get.offAllNamed(Routes.homepage)
+                            ? () async {
+                                bool isSuccess = await controller.login();
+                                if (isSuccess) {
+                                  Get.offAllNamed(Routes.homepage);
+                                }
+                              }
                             : null,
-                        child: const Text(
-                          'Masuk',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                                'Masuk',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
                   ),
                 )
               ],
@@ -145,7 +156,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       )),
     );

@@ -19,5 +19,5 @@ class Utils {
   static const SizedBox verticalSeparator = SizedBox(
     height: 12,
   );
-
+  static const baseUrl = "http://103.189.235.157:10006";
 }

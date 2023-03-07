@@ -90,6 +90,7 @@ class RegisterPage extends StatelessWidget {
                   Utils.verticalSeparator,
                   SizedBox(
                     width: double.infinity,
+                    height: 44,
                     child: Obx(
                       () => ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -98,12 +99,19 @@ class RegisterPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 16)),
                           onPressed: controller.isValid.value
-                              ? () => Get.offAllNamed(Routes.homepage)
+                              ? () async {
+                                  bool isSuccess = await controller.register();
+                                  if (isSuccess) {
+                                    Get.offAllNamed(Routes.homepage);
+                                  }
+                                }
                               : null,
-                          child: const Text(
-                            'Daftar',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator()
+                              : const Text(
+                                  'Masuk',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )),
                     ),
                   )
                 ],

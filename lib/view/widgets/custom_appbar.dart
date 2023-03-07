@@ -9,7 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   void Function(String) onSubmitted;
   Color? textFieldColor;
   Widget? leadingWidget;
-
+  
   CustomAppBar({
     super.key,
     this.textFieldColor,
@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingWidget,
     required TextEditingController searchController,
   }) : _searchController = searchController;
+
 
   final TextEditingController _searchController;
   @override

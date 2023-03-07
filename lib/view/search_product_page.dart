@@ -3,7 +3,6 @@ import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_appbar.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
