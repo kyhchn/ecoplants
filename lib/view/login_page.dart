@@ -35,9 +35,9 @@ class LoginPage extends StatelessWidget {
                 Utils.verticalSeparator,
                 TextField(
                   onChanged: (value) => controller.validate(),
-                  controller: controller.emailEditingController,
+                  controller: controller.emailorUsernameEditingController,
                   style: const TextStyle(color: Colors.black, fontSize: 16),
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
@@ -109,7 +109,6 @@ class LoginPage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             padding: const EdgeInsets.symmetric(vertical: 10)),
-
                         onPressed: controller.isValid.value
                             ? () async {
                                 bool isSuccess = await controller.login();

@@ -36,9 +36,16 @@ class RegisterPage extends StatelessWidget {
                       controller: controller,
                       label: 'Nama Pengguna',
                       textInputType: TextInputType.text,
+                      textEditingController: controller.nameEditingController),
+                  const HintText(content: 'Contoh: naruto uciha'),
+                  Utils.verticalSeparator,
+                  TextFieldUnObs(
+                      controller: controller,
+                      label: 'Username',
+                      textInputType: TextInputType.text,
                       textEditingController:
                           controller.usernameEditingController),
-                  const HintText(content: 'Contoh: narutouciha'),
+                  const HintText(content: 'Contoh: uchihaboruto11'),
                   Utils.verticalSeparator,
                   TextFieldUnObs(
                       controller: controller,
@@ -55,7 +62,7 @@ class RegisterPage extends StatelessWidget {
                     textEditingController: controller.passwordEditingController,
                     textInputType: TextInputType.visiblePassword,
                   ),
-                  const HintText(content: 'Huruf Kapital'),
+                  const HintText(content: 'Gunakan kombinasi huruf dan angka'),
                   Utils.verticalSeparator,
                   TextFieldObs(
                       controller: controller,
@@ -97,7 +104,7 @@ class RegisterPage extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 16)),
+                                  const EdgeInsets.symmetric(vertical: 14)),
                           onPressed: controller.isValid.value
                               ? () async {
                                   bool isSuccess = await controller.register();
@@ -109,7 +116,7 @@ class RegisterPage extends StatelessWidget {
                           child: controller.isLoading.value
                               ? const CircularProgressIndicator()
                               : const Text(
-                                  'Masuk',
+                                  'Daftar',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 )),
                     ),

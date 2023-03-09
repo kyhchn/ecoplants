@@ -40,7 +40,7 @@ class Routes {
         transition: Transition.native,
         transitionDuration: const Duration(milliseconds: 500)),
     GetPage(name: search, page: () => SearchProductPage()),
-    GetPage(name: detailProduct, page: () => const DetailProductPage()),
+    GetPage(name: detailProduct, page: () => DetailProductPage()),
     GetPage(
         name: cart,
         page: () => const CartPage(),

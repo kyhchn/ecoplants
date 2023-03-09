@@ -6,27 +6,27 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   static LoginController get i => Get.find();
   final isValid = false.obs;
-  final emailEditingController = TextEditingController();
+  final emailorUsernameEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final isObscure = false.obs;
   final isLoading = false.obs;
 
   @override
   void onClose() {
-    emailEditingController.dispose();
+    emailorUsernameEditingController.dispose();
     passwordEditingController.dispose();
     super.onClose();
   }
 
   void validate() {
     isValid.value = passwordEditingController.text.isNotEmpty &&
-        EmailValidator.validate(emailEditingController.text);
+        emailorUsernameEditingController.value.text.isNotEmpty;
   }
 
   Future<bool> login() async {
     isLoading(true);
-    bool isSuccess = await AuthService()
-        .login(emailEditingController.text, passwordEditingController.text);
+    bool isSuccess = await AuthService().login(
+        emailorUsernameEditingController.text, passwordEditingController.text);
     isLoading(false);
     if (!isSuccess) {
       Get.showSnackbar(const GetSnackBar(

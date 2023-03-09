@@ -8,7 +8,7 @@ class AuthService {
   Future<bool> login(String emailorUsername, String password) async {
     dio.options.headers['Content-Type'] = 'application/json';
     try {
-      final response = await dio.post("${Utils.baseUrl}/login",
+      final response = await dio.post("${Utils.baseUrl}/user/login",
           data: {'username/email': emailorUsername, 'password': password});
       final token = response.data['data']['token'];
       if (token != null) {
@@ -24,7 +24,8 @@ class AuthService {
   Future<bool> register(
       String name, String email, String username, String password) async {
     try {
-      final response = await dio.post("${Utils.baseUrl}/register", data: {
+      dio.options.headers['Content-Type'] = 'application/json';
+      final response = await dio.post("${Utils.baseUrl}/user/register", data: {
         'name': name,
         'email': email,
         'username': username,

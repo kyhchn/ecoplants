@@ -1,12 +1,13 @@
 import 'package:ecoplants/controller/search_controller.dart';
+import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/view/widgets/custom_appbar.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailProductPage extends StatelessWidget {
-  const DetailProductPage({super.key});
-
+  DetailProductPage({super.key});
+  Product product = Get.arguments['product'];
   @override
   Widget build(BuildContext context) {
     SearchController controller;

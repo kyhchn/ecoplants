@@ -44,80 +44,88 @@ class SearchProductPage extends StatelessWidget {
             ),
             searchController: controller.searchController,
             onSubmitted: (str) {}),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                TabItem(
-                  controller: controller,
-                  isProduct: true,
-                  size: size,
-                  content: 'Produk',
-                ),
-                TabItem(
-                  controller: controller,
-                  size: size,
-                  isProduct: false,
-                  content: 'Toko',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 12.5,
-            ),
-            SizedBox(
-              height: 41,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: Colors.black.withOpacity(0.2), width: 1)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+        body: Obx(
+          () => controller.isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    Row(
+                      children: [
+                        TabItem(
+                          controller: controller,
+                          isProduct: true,
+                          size: size,
+                          content: 'Produk',
+                        ),
+                        TabItem(
+                          controller: controller,
+                          size: size,
+                          isProduct: false,
+                          content: 'Toko',
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12.5,
+                    ),
+                    SizedBox(
+                      height: 41,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
                         children: [
-                          SvgPicture.asset('assets/svg/Filter.svg'),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: Colors.black.withOpacity(0.2),
+                                      width: 1)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/svg/Filter.svg'),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'Filter',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              )),
                           const SizedBox(
                             width: 8,
                           ),
-                          Text(
-                            'Filter',
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
-                          )
+                          LabelItem(content: 'Terbaru'),
+                          LabelItem(content: 'Gratis Ongkir'),
+                          LabelItem(content: 'Official Store'),
+                          LabelItem(content: 'Harga Terendah'),
+                          LabelItem(content: 'Harga Tertinggi'),
+                          LabelItem(content: 'Malang'),
                         ],
-                      )),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  LabelItem(content: 'Terbaru'),
-                  LabelItem(content: 'Gratis Ongkir'),
-                  LabelItem(content: 'Official Store'),
-                  LabelItem(content: 'Harga Terendah'),
-                  LabelItem(content: 'Harga Tertinggi'),
-                  LabelItem(content: 'Malang'),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Obx(
-              () => Body(
-                isProduct: controller.isProduct.value,
-              ),
-            )
-          ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Obx(
+                      () => Body(
+                        searchController: controller,
+                        isProduct: controller.isProduct.value,
+                      ),
+                    )
+                  ],
+                ),
         ));
   }
 }
@@ -145,25 +153,28 @@ class LabelItem extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  Body({super.key, required this.isProduct});
+  Body({super.key, required this.isProduct, required this.searchController});
   bool isProduct;
-
+  final SearchController searchController;
   @override
   Widget build(BuildContext context) {
     if (isProduct) {
       return Expanded(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: GridView.builder(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemCount: 20,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 240 / 160,
-                mainAxisExtent: 243,
-                mainAxisSpacing: 20,
-                crossAxisCount: 2),
-            itemBuilder: (context, index) => const ProductCard(),
+          child: Obx(
+            () => GridView.builder(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemCount: searchController.products.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 240 / 160,
+                  mainAxisExtent: 243,
+                  mainAxisSpacing: 20,
+                  crossAxisCount: 2),
+              itemBuilder: (context, index) => ProductCard(
+                  product: searchController.products.elementAt(index)),
+            ),
           ),
         ),
       );

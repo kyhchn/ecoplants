@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
 import 'package:ecoplants/view/widgets/top_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({
@@ -16,6 +18,7 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = HomeController.i;
     return Stack(children: [
       ListView(
         physics: const BouncingScrollPhysics(),
@@ -82,17 +85,25 @@ class HomeBody extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              CarouselSlider.builder(
-                  itemCount: 9,
-                  itemBuilder: (context, index, realIndex) =>
-                      const ProductCard(),
-                  options: CarouselOptions(
-                    viewportFraction: 0.5,
-                    initialPage: list.length ~/ 2,
-                    aspectRatio: 238 / 160,
-                    enableInfiniteScroll: false,
-                    scrollDirection: Axis.horizontal,
-                  )),
+              Obx(
+                () => controller.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CarouselSlider.builder(
+                        itemCount: controller.listPopularProduct.length,
+                        itemBuilder: (context, index, realIndex) => ProductCard(
+                            product:
+                                controller.listPopularProduct.elementAt(index)),
+                        options: CarouselOptions(
+                          viewportFraction: 0.5,
+                          initialPage: list.length ~/ 2,
+                          height: 243,
+                          
+                          enableInfiniteScroll: false,
+                          scrollDirection: Axis.horizontal,
+                        )),
+              ),
               const SizedBox(
                 height: 12,
               ),
@@ -118,16 +129,25 @@ class HomeBody extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: GridView.builder(
-                  itemBuilder: (context, index) => const ProductCard(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 9,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 240 / 160,
-                      mainAxisExtent: 243,
-                      crossAxisCount: 2),
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : GridView.builder(
+                          itemBuilder: (context, index) => ProductCard(
+                              product: controller.listReccomendedProduct
+                                  .elementAt(index)),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.listReccomendedProduct.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 240 / 160,
+                                  mainAxisExtent: 245,
+                                  crossAxisCount: 2),
+                        ),
                 ),
               ),
               const SizedBox(

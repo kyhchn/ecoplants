@@ -5,6 +5,7 @@ import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/search_product_page.dart';
 import 'package:ecoplants/view/widgets/home_body.dart';
+import 'package:ecoplants/view/widgets/profile_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -283,7 +284,7 @@ class HomePage extends StatelessWidget {
                           ))
                         ],
                       )
-                    : Container()),
+                    : const ProfileBody()),
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
             items: [

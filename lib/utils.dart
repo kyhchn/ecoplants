@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Utils {
   static MaterialColor primaryColor = const MaterialColor(0xFF4A9C80, {
@@ -20,4 +21,6 @@ class Utils {
     height: 12,
   );
   static const baseUrl = "http://103.189.235.157:10006";
+  static NumberFormat formatIDR =
+      NumberFormat.currency(locale: 'id_IDR', symbol: 'Rp');
 }

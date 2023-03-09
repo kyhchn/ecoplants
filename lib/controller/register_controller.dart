@@ -8,6 +8,7 @@ class RegisterController extends GetxController {
 
   final emailEditingControlller = TextEditingController();
   final passwordEditingController = TextEditingController();
+  final nameEditingController = TextEditingController();
   final usernameEditingController = TextEditingController();
   final verifPasswordEditingController = TextEditingController();
   final isValid = false.obs;
@@ -28,6 +29,7 @@ class RegisterController extends GetxController {
   void validate() {
     isValid.value = EmailValidator.validate(emailEditingControlller.text) &&
         passwordEditingController.text.isNotEmpty &&
+        nameEditingController.text.isNotEmpty &&
         usernameEditingController.text.isNotEmpty &&
         (passwordEditingController.text ==
             verifPasswordEditingController.text) &&
@@ -37,7 +39,7 @@ class RegisterController extends GetxController {
   Future<bool> register() async {
     isLoading(true);
     bool isSuccess = await AuthService().register(
-        usernameEditingController.text,
+        nameEditingController.text,
         emailEditingControlller.text,
         usernameEditingController.text,
         passwordEditingController.text);
@@ -45,6 +47,7 @@ class RegisterController extends GetxController {
     if (!isSuccess) {
       Get.showSnackbar(const GetSnackBar(
         message: 'failed to register, please try again',
+        duration: Duration(seconds: 3),
       ));
     }
     return isSuccess;

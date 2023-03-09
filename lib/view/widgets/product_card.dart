@@ -1,17 +1,18 @@
+import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/routes.dart';
+import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
-
+  ProductCard({super.key, required this.product});
+  Product product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.detailProduct),
+      onTap: () =>
+          Get.toNamed(Routes.detailProduct, arguments: {'product': product}),
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -23,10 +24,21 @@ class ProductCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 9.57),
-                  child: Image.asset('assets/images/dummy_plant2.png'),
+                Container(
+                  height: 160,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(product.picture),
+                          fit: BoxFit.cover),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))),
+                ),
+                Container(
+                  width: double.infinity,
+                  color: Colors.black.withOpacity(0.1),
+                  height: 1,
                 ),
                 Expanded(
                   child: Padding(
@@ -35,19 +47,20 @@ class ProductCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Monstera Varigata',
-                          style: TextStyle(fontSize: 10, color: Colors.black),
+                        Text(
+                          product.name,
+                          style: const TextStyle(
+                              fontSize: 10, color: Colors.black),
                         ),
-                        const Text(
-                          'Rp300.000',
-                          style: TextStyle(
+                        Text(
+                          Utils.formatIDR.format(product.price),
+                          style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
                               fontSize: 10),
                         ),
                         Text(
-                          'Jakarta Timur',
+                          'dummy location',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontWeight: FontWeight.w400,
@@ -61,7 +74,7 @@ class ProductCard extends StatelessWidget {
                               size: 10,
                             ),
                             Text(
-                              '4.9 | Terjual 10',
+                              '${product.rating} | Terjual dummy',
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.5),
                                   fontWeight: FontWeight.w500,
