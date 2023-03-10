@@ -1,6 +1,7 @@
 import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/controller/search_controller.dart';
 import 'package:ecoplants/model/product.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_appbar.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
@@ -75,7 +76,7 @@ class DetailProductPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            Utils.formatIDR.format(product.price),
+                            Utils.convertToIdr(product.price),
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
                           ),
@@ -485,7 +486,7 @@ class DetailProductPage extends StatelessWidget {
                             side:
                                 BorderSide(color: Utils.primaryColor, width: 1),
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed(Routes.paymentDetail),
                     child: Text(
                       'Beli Langsung',
                       style: TextStyle(
@@ -546,8 +547,8 @@ class DetailProductItem extends StatelessWidget {
             Expanded(
               child: Text(
                 parameter,
-                style:
-                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 8),
+                style: TextStyle(
+                    color: Colors.black.withOpacity(0.5), fontSize: 8),
               ),
             ),
             Text(

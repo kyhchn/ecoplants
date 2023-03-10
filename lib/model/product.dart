@@ -29,7 +29,7 @@ class Product {
         price: json['price'],
         rating: json['rating'],
         description: json['description'],
-        merchant: "dummy merchant",
+        merchant: json['merchant'],
         picture: json['picture']);
   }
 

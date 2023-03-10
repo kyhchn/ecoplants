@@ -21,6 +21,9 @@ class Utils {
     height: 12,
   );
   static const baseUrl = "https://nurfattah.aenzt.tech";
-  static NumberFormat formatIDR =
-      NumberFormat.currency(locale: 'id_IDR', symbol: 'Rp');
+  static String convertToIdr(int amount) {
+    NumberFormat formatIDR =
+        NumberFormat.currency(locale: 'id_IDR', symbol: 'Rp');
+    return formatIDR.format(amount).replaceAll(",00", "");
+  }
 }

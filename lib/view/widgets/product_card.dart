@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
                               fontSize: 10, color: Colors.black),
                         ),
                         Text(
-                          Utils.formatIDR.format(product.price),
+                          Utils.convertToIdr(product.price),
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
