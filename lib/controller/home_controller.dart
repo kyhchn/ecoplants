@@ -18,7 +18,7 @@ class HomeController extends GetxController {
 
   Future<void> fetchAllProduct() async {
     isLoading(true);
-    final list = await ProductService().getAllProduct(10, 1);
+    final list = await ProductService().getAllProduct(20, 1);
     listPopularProduct.value = list.sublist(0, 5);
     listReccomendedProduct.value = list.sublist(5);
     isLoading(false);
