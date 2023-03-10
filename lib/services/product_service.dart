@@ -12,8 +12,9 @@ class ProductService {
       final response =
           await dio.get("${Utils.baseUrl}/product/search/?name=$target");
       if (response.data != null) {
-        (response.data['data'] as List)
-            .map((e) => list.add(Product.fromJson(e)));
+        for (var element in (response.data['data'] as List)) {
+          list.add(Product.fromJson(element));
+        }
       }
     } on DioError catch (e) {
       print(e.message);
@@ -37,6 +38,4 @@ class ProductService {
     }
     return list;
   }
-
-  
 }

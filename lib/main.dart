@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     final token = GetStorage().read('token');
     return GetMaterialApp(
       getPages: Routes.routes,
-      initialRoute: token != null ? Routes.homepage : Routes.carousel,
+      initialRoute: token != null ? Routes.homepage : Routes.homepage,
       title: 'EcoPlants',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
