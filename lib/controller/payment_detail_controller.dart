@@ -6,7 +6,9 @@ class PaymentDetailController extends GetxController {
   static PaymentDetailController get i => Get.find();
 
   final index = 0.obs;
-  final isValid = false.obs;
+  final informationIsValid = false.obs;
+  final shippingIsValid = false.obs;
+  final paymentIsValid = false.obs;
   final nameController = TextEditingController();
   final telpNumberController = TextEditingController();
   final provinceController = TextEditingController();
@@ -14,14 +16,21 @@ class PaymentDetailController extends GetxController {
   final postalCodeController = TextEditingController();
   final addressController = TextEditingController();
   final notesController = TextEditingController();
-  Rx<ShippingMethod?> shippingMethod =
-      ShippingMethod(company: 'JNE Reguler', price: 18000, maxDay: 5, minDay: 3)
-          .obs;
+  final paymentMethod = ''.obs;
+  Rx<int> shippingMethod = 4.obs;
+  final listShippingMethod = <ShippingMethod>[
+    ShippingMethod(company: 'JNE Regular', price: 18000, maxDay: 5, minDay: 3),
+    ShippingMethod(company: 'J&t Express', price: 20000, maxDay: 5, minDay: 3),
+    ShippingMethod(
+        company: 'Sicepat Ekonomi', price: 12000, maxDay: 7, minDay: 5),
+  ];
 
   @override
   void dispose() {
     index.close();
-    isValid.close();
+    informationIsValid.close();
+    shippingIsValid.close();
+    paymentIsValid.close();
     nameController.dispose();
     telpNumberController.dispose();
     provinceController.dispose();
@@ -32,13 +41,38 @@ class PaymentDetailController extends GetxController {
     super.dispose();
   }
 
-  void validate() {
-    isValid.value = nameController.value.text.isNotEmpty &&
+  void Function()? getOnPressedFunction() {
+    if (index.value == 0) {
+      if (informationIsValid.value) {
+        return () => index.value = 1;
+      }
+    } else if (index.value == 1) {
+      if (shippingIsValid.value) {
+        return () => index.value = 2;
+      }
+    } else if (index.value == 2) {
+      if (paymentIsValid.value) {
+        return () => index.value = 3;
+      }
+    }
+    return null;
+  }
+
+  void informationValidate() {
+    informationIsValid.value = nameController.value.text.isNotEmpty &&
         telpNumberController.value.text.isNotEmpty &&
         provinceController.value.text.isNotEmpty &&
         cityAndSubDistrictController.value.text.isNotEmpty &&
         postalCodeController.value.text.isNotEmpty &&
         addressController.value.text.isNotEmpty;
+  }
+
+  void shippingValidate() {
+    shippingIsValid.value = shippingMethod.value != 4;
+  }
+
+  void paymentValidate() {
+    paymentIsValid.value = paymentMethod.value != '';
   }
 }
 
@@ -50,4 +84,7 @@ class ShippingMethod {
       required this.price,
       required this.maxDay,
       required this.minDay});
+  String getEstimatedText() {
+    return 'Estimasi $minDay - $maxDay Hari';
+  }
 }

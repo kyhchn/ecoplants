@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Utils {
   static MaterialColor primaryColor = const MaterialColor(0xFF4A9C80, {
@@ -22,8 +21,10 @@ class Utils {
   );
   static const baseUrl = "https://nurfattah.aenzt.tech";
   static String convertToIdr(int amount) {
-    NumberFormat formatIDR =
-        NumberFormat.currency(locale: 'id_IDR', symbol: 'Rp');
-    return formatIDR.format(amount).replaceAll(",00", "");
+    String result = 'Rp ${amount.toString().replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (match) => '${match.group(1)}.',
+        )}';
+    return result;
   }
 }

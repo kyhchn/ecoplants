@@ -43,7 +43,9 @@ class SearchProductPage extends StatelessWidget {
               ],
             ),
             searchController: controller.searchController,
-            onSubmitted: (str) {}),
+            onSubmitted: (str) async {
+              await controller.fetchProductByName();
+            }),
         body: Obx(
           () => controller.isLoading.value
               ? const Center(
