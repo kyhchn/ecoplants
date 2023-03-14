@@ -7,6 +7,7 @@ import 'package:ecoplants/bindings/register_binding.dart';
 import 'package:ecoplants/view/carousel_page.dart';
 import 'package:ecoplants/view/cart_page.dart';
 import 'package:ecoplants/view/detail_product_page.dart';
+import 'package:ecoplants/view/donation_detail_page.dart';
 import 'package:ecoplants/view/home_page.dart';
 import 'package:ecoplants/view/login_page.dart';
 import 'package:ecoplants/view/payment_detail_page.dart';
@@ -23,8 +24,13 @@ class Routes {
   static String detailProduct = '/detail-product-page';
   static String cart = '/cart-page';
   static String paymentDetail = '/payment-detail-page';
+  static String donationDetail = '/donation-detail-page';
 
   static List<GetPage> routes = [
+    GetPage(
+      name: donationDetail,
+      page: () => const DonationDetailPage(),
+    ),
     GetPage(
         name: carousel, page: () => CarouselPage(), binding: CarouselBinding()),
     GetPage(

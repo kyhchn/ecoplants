@@ -15,6 +15,7 @@ class Utils {
   });
 
   static const Color turquoise = Color(0xFF4A9C80);
+  static const Color red = Color(0xFFDA1919);
   static const Color grey = Color(0xFFD9D9D9);
   static const SizedBox verticalSeparator = SizedBox(
     height: 12,

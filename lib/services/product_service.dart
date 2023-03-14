@@ -29,7 +29,7 @@ class ProductService {
       final response =
           await dio.get("${Utils.baseUrl}/products?page=$page&limit=$limit");
       if (response.data != null) {
-        for (var element in (response.data['data'] as List<dynamic>)) {
+        for (var element in (response.data['data']['products'] as List<dynamic>)) {
           list.add(Product.fromJson(element));
         }
       }
