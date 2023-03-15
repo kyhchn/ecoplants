@@ -1,5 +1,6 @@
 import 'package:ecoplants/bindings/carousel_binding.dart';
 import 'package:ecoplants/bindings/cart_binding.dart';
+import 'package:ecoplants/bindings/donate_binding.dart';
 import 'package:ecoplants/bindings/home_binding.dart';
 import 'package:ecoplants/bindings/login_binding.dart';
 import 'package:ecoplants/bindings/payment_binding.dart';
@@ -28,9 +29,9 @@ class Routes {
 
   static List<GetPage> routes = [
     GetPage(
-      name: donationDetail,
-      page: () => const DonationDetailPage(),
-    ),
+        name: donationDetail,
+        page: () => const DonationDetailPage(),
+        binding: DonateBinding()),
     GetPage(
         name: carousel, page: () => CarouselPage(), binding: CarouselBinding()),
     GetPage(
