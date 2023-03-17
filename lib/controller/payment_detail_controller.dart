@@ -40,6 +40,19 @@ class PaymentDetailController extends GetxController {
     super.dispose();
   }
 
+  Future<bool> updateShippingAddress() async {
+    isLoading(true);
+    final isSuccess = await TransactionService().updateShippingAddress(
+        nameController.text,
+        telpNumberController.text,
+        provinceController.text,
+        cityAndSubDistrictController.text,
+        addressController.text,
+        int.parse(postalCodeController.text));
+    isLoading(false);
+    return isSuccess;
+  }
+
   Future<Transaction?> checkOut(int quantity, int productId) async {
     isLoading(true);
     final transaction = await TransactionService().checkOut(
@@ -51,7 +64,14 @@ class PaymentDetailController extends GetxController {
   void Function()? getOnPressedFunction(int quantity, int productId) {
     if (index.value == 0) {
       if (informationIsValid.value) {
-        return () => index.value = 1;
+        return () async {
+          final result = await updateShippingAddress();
+          if (result) {
+            index.value = 1;
+          } else {
+            Get.showSnackbar(Utils.getSnackBar('gagal update alamat'));
+          }
+        };
       }
     } else if (index.value == 1) {
       if (shippingIsValid.value) {
