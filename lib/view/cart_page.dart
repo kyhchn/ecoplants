@@ -1,5 +1,6 @@
 import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/model/cart.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,6 +56,7 @@ class CartPage extends StatelessWidget {
                             value: controller.isSelectAll.value,
                             onChanged: (value) {
                               controller.isSelectAll.value = value!;
+                              controller.calculateTotalPayment();
                             },
                           ),
                         ),
@@ -85,30 +87,43 @@ class CartPage extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'Total Tagihan',
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              'val',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            Obx(
+                              () => Text(
+                                Utils.convertToIdr(controller.totalPrice.value),
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
                             )
                           ],
                         ),
                         SizedBox(
                           width: 115,
                           height: 40,
-                          child: ElevatedButton(
+                          child: Obx(() => ElevatedButton(
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)))),
-                              onPressed: () {},
-                              child: const Text('Beli (val)')),
+                              onPressed: controller.totalQuantity.value != 0
+                                  ? () => Get.toNamed(Routes.paymentDetail,
+                                          arguments: {
+                                            'quantity': controller
+                                                .getSelectedProduct()!
+                                                .quantity,
+                                            'product': controller
+                                                .getSelectedProduct()!
+                                                .product
+                                          })
+                                  : null,
+                              child: Text(
+                                  'Beli (${controller.totalQuantity.value})'))),
                         )
                       ],
                     )
@@ -185,6 +200,7 @@ class CartItem extends StatelessWidget {
                   value: controller.isChecked.elementAt(index),
                   onChanged: (value) {
                     controller.isChecked[index] = value!;
+                    controller.calculateTotalPayment();
                   },
                 ),
               ),

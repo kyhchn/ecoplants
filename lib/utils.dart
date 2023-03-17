@@ -36,4 +36,32 @@ class Utils {
       duration: const Duration(seconds: 2),
     );
   }
+
+  static String getDayOfWeeks(int day) {
+    String dayOfWeek = '';
+    switch (day) {
+      case 1:
+        dayOfWeek = "Minggu";
+        break;
+      case 2:
+        dayOfWeek = "Senin";
+        break;
+      case 3:
+        dayOfWeek = "Selasa";
+        break;
+      case 4:
+        dayOfWeek = "Rabu";
+        break;
+      case 5:
+        dayOfWeek = "Kamis";
+        break;
+      case 6:
+        dayOfWeek = "Jumat";
+        break;
+      case 7:
+        dayOfWeek = "Sabtu";
+        break;
+    }
+    return dayOfWeek;
+  }
 }

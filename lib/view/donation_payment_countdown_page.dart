@@ -1,15 +1,19 @@
 import 'package:ecoplants/controller/donate_controller.dart';
+import 'package:ecoplants/controller/donation_controller.dart';
 import 'package:ecoplants/controller/home_controller.dart';
+import 'package:ecoplants/model/donation_transaction.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DonationPaymentCountdownPage extends StatelessWidget {
-  const DonationPaymentCountdownPage({super.key});
-
+  DonationPaymentCountdownPage({super.key});
+  final DonationTransaction donationTransaction =
+      Get.arguments['donationTransaction'];
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(donationTransaction.createdAt);
     final controller = DonateController.i;
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +59,7 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Bank ${controller.paymentMethod.value}',
+                          donationTransaction.paymentMethod,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -87,7 +91,7 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              '12345678',
+                              '3438923',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -119,7 +123,7 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          Utils.convertToIdr(controller.amount.value),
+                          Utils.convertToIdr(donationTransaction.nominal),
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         )
@@ -140,7 +144,7 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Senin, 5 Des 2022 16.13 WIB',
+                              '${Utils.getDayOfWeeks(dateTime.weekday)}, ${dateTime.day} ${dateTime.month} ${dateTime.year} ${dateTime.hour}.${dateTime.minute} WIB',
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.8),
                                   fontWeight: FontWeight.bold,
@@ -213,7 +217,11 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
-                        onPressed: () {
+                        onPressed: () async {
+                          final donationController = DonationController.i;
+                          await donationController.fetchListDonation();
+                          await donationController
+                              .fetchListDonationTransaction();
                           Get.back();
                           Get.back();
                         },
@@ -234,7 +242,11 @@ class DonationPaymentCountdownPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 side: BorderSide(
                                     color: Utils.primaryColor, width: 1))),
-                        onPressed: () {
+                        onPressed: () async {
+                          final donationController = DonationController.i;
+                          await donationController.fetchListDonation();
+                          await donationController
+                              .fetchListDonationTransaction();
                           final controller = HomeController.i;
                           controller.index.value = 2;
                           Get.back();

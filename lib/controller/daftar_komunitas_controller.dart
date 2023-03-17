@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:ecoplants/controller/community_controller.dart';
+import 'package:ecoplants/services/community_service.dart';
+import 'package:ecoplants/utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ class DaftarKomunitasController extends GetxController {
   final emailEditingController = TextEditingController();
   final telpNumbeEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
+  final isLoading = false.obs;
   final index = 0.obs;
   final isValid = false.obs;
   File? image, document;
@@ -25,6 +29,7 @@ class DaftarKomunitasController extends GetxController {
       image = file;
       isImageSelected(true);
     }
+    validate();
   }
 
   void pickDocument() async {
@@ -35,6 +40,7 @@ class DaftarKomunitasController extends GetxController {
       document = file;
       isDocumentSelected(true);
     }
+    validate();
   }
 
   @override
@@ -54,5 +60,26 @@ class DaftarKomunitasController extends GetxController {
         EmailValidator.validate(emailEditingController.text) &&
         telpNumbeEditingController.text.isNotEmpty &&
         descriptionEditingController.text.isNotEmpty;
+  }
+
+  Future<void> register() async {
+    isLoading(true);
+    final isSuccess = await CommunityService().createCommunity(
+        nameEditingController.text,
+        emailEditingController.text,
+        telpNumbeEditingController.text,
+        descriptionEditingController.text,
+        image!,
+        document!);
+    if (isSuccess) {
+      final controller = CommunityController.i;
+      await controller.fetch();
+      Get.back();
+      Get.showSnackbar(Utils.getSnackBar('berhasil mendaftarkan komunitas'));
+    } else {
+      Get.back();
+      Get.showSnackbar(Utils.getSnackBar('gagal mendaftarkan komunitas'));
+    }
+    isLoading(false);
   }
 }

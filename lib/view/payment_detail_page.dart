@@ -1,6 +1,7 @@
+import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/controller/payment_detail_controller.dart';
+import 'package:ecoplants/controller/user_controller.dart';
 import 'package:ecoplants/model/product.dart';
-import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/information_body.dart';
 import 'package:ecoplants/view/widgets/payment_body.dart';
@@ -59,7 +60,10 @@ class PaymentDetailPage extends StatelessWidget {
                             child: PaymentBody(controller: controller),
                           )
                         : Expanded(
-                            child: PostPaymentBody(controller: controller))),
+                            child: PostPaymentBody(
+                            controller: controller,
+                            product: product,
+                          ))),
             SizedBox(
               width: double.infinity,
               child: Obx(
@@ -139,8 +143,14 @@ class PaymentDetailPage extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     backgroundColor: Utils.primaryColor),
-                                onPressed: () =>
-                                    Get.offAllNamed(Routes.homepage),
+                                onPressed: () async {
+                                  final homecontroller = HomeController.i;
+                                  final userController = UserController.i;
+                                  await userController.fetchUser();
+                                  homecontroller.index.value = 0;
+                                  Get.until((route) =>
+                                      Get.currentRoute == '/home-page');
+                                },
                                 child: const Text(
                                   'Belanja Lagi',
                                   style: TextStyle(
@@ -161,8 +171,14 @@ class PaymentDetailPage extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     backgroundColor: Colors.white),
-                                onPressed: () =>
-                                    Get.offAllNamed(Routes.homepage),
+                                onPressed: () async {
+                                  final homecontroller = HomeController.i;
+                                  final userController = UserController.i;
+                                  await userController.fetchUser();
+                                  homecontroller.index.value = 2;
+                                  Get.until((route) =>
+                                      Get.currentRoute == '/home-page');
+                                },
                                 child: Text(
                                   'Cek Status Pemesanan',
                                   style: TextStyle(

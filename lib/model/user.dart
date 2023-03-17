@@ -14,6 +14,8 @@ class User {
     required this.phone,
     required this.transaction,
     required this.shippingAddressId,
+    required this.picture,
+    required this.carts,
   });
   late int iD;
   late String createdAt;
@@ -26,10 +28,12 @@ class User {
   late List<Transaction> transaction;
   late int shippingAddressId;
   late List<Cart> carts;
+  late String picture;
 
   User.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     createdAt = json['CreatedAt'];
+    picture = json['picture'];
     updatedAt = json['UpdatedAt'];
     name = json['name'];
     username = json['username'];
@@ -47,6 +51,7 @@ class User {
     final _data = <String, dynamic>{};
     _data['ID'] = iD;
     _data['CreatedAt'] = createdAt;
+    _data['picture'] = picture;
     _data['UpdatedAt'] = updatedAt;
     _data['name'] = name;
     _data['username'] = username;

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:ecoplants/controller/cart_controller.dart';
-import 'package:ecoplants/model/cart.dart';
 import 'package:ecoplants/model/user.dart';
 import 'package:ecoplants/services/user_service.dart';
+import 'package:ecoplants/utils.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
@@ -14,7 +17,7 @@ class UserController extends GetxController {
     super.onInit();
   }
 
-  void fetchUser() async {
+  Future<void> fetchUser() async {
     isLoading(true);
     final data = await UserService().getUserById();
     if (data != null) {
@@ -24,13 +27,19 @@ class UserController extends GetxController {
     }
     isLoading(false);
   }
-}
 
-RxList<Map<String, dynamic>> convert(List<Cart> list) {
-  final res = <Map<String, dynamic>>[];
-  for (var element in list) {
-    final map = {'cart': element.obs, 'isChecked': false.obs};
-    res.add(map);
+  Future<void> updateProfileImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      final isSuccess = await UserService().updateImageProfile(file);
+      if (isSuccess) {
+        Get.showSnackbar(Utils.getSnackBar('sukses update foto profile'));
+        await fetchUser();
+        return;
+      }
+      Get.showSnackbar(Utils.getSnackBar('gagal update foto profile'));
+    }
   }
-  return res.obs;
 }

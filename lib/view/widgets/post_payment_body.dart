@@ -1,16 +1,16 @@
 import 'package:ecoplants/controller/payment_detail_controller.dart';
+import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PostPaymentBody extends StatelessWidget {
-  const PostPaymentBody({
-    super.key,
-    required this.controller,
-  });
+  const PostPaymentBody(
+      {super.key, required this.controller, required this.product});
 
   final PaymentDetailController controller;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +160,7 @@ class PostPaymentBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'BCA Virtual Account',
+                  '${controller.paymentMethod.value} Virtual Account',
                   style: TextStyle(
                       fontSize: 10,
                       color: Colors.black.withOpacity(0.5),
@@ -199,7 +199,7 @@ class PostPaymentBody extends StatelessWidget {
                         Utils.convertToIdr(controller.listShippingMethod
                                 .elementAt(controller.shippingMethod.value)
                                 .price +
-                            300000),
+                            product.price),
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w600),
                       ),
@@ -231,7 +231,7 @@ class PostPaymentBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Senin, 5 Des 2022 16.13 WIB',
+                      'Sabtu, 18 Maret 2023 16.13 WIB',
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),

@@ -1,3 +1,4 @@
+import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/controller/user_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/services/cache_service.dart';
@@ -23,9 +24,9 @@ class ProfileBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   backgroundImage:
-                      AssetImage('assets/images/dummy_profile.png'),
+                      NetworkImage(userController.user.value.picture),
                   radius: 25,
                 ),
                 const SizedBox(
@@ -58,7 +59,7 @@ class ProfileBody extends StatelessWidget {
                 const Spacer(),
                 IconButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () => Get.toNamed(Routes.editProfile),
+                    onPressed: () => Get.toNamed(Routes.editProfile,),
                     icon: const Icon(
                       Icons.edit_outlined,
                       size: 24,
@@ -80,7 +81,10 @@ class ProfileBody extends StatelessWidget {
               CustomTextButton(
                   content: 'Lihat Semua',
                   textStyle: TextStyle(color: Utils.primaryColor, fontSize: 10),
-                  onPressed: () {})
+                  onPressed: () {
+                    final homeController = HomeController.i;
+                    homeController.index.value = 2;
+                  })
             ],
           ),
         ),

@@ -16,17 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final token = GetStorage().read('token');
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: GetMaterialApp(
-        getPages: Routes.routes,
-        initialRoute: token != null ? Routes.homepage : Routes.carousel,
-        title: 'EcoPlants',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: 'Poppins',
-          primarySwatch: Utils.primaryColor,
-        ),
+    return GetMaterialApp(
+      getPages: Routes.routes,
+      initialRoute: token != null ? Routes.homepage : Routes.carousel,
+      title: 'EcoPlants',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Poppins',
+        primarySwatch: Utils.primaryColor,
       ),
     );
   }

@@ -9,9 +9,23 @@ class CartController extends GetxController {
   var carts = <Cart>[].obs;
   var isChecked = <bool>[].obs;
   final totalPrice = 0.obs;
+  final totalQuantity = 0.obs;
   final isLoading = false.obs;
-
   final isSelectAll = false.obs;
+
+  @override
+  void onInit() {
+    calculateTotalPayment();
+    super.onInit();
+  }
+
+  Cart? getSelectedProduct() {
+    for (var i = 0; i < isChecked.length; i++) {
+      if (isChecked[i]) {
+        return carts.elementAt(i);
+      }
+    }
+  }
 
   Future<void> deleteItem(int id) async {
     isLoading(true);
@@ -24,6 +38,20 @@ class CartController extends GetxController {
       await fetch();
     }
     isLoading(false);
+  }
+
+  void calculateTotalPayment() {
+    int result = 0;
+    int quantity = 0;
+    for (var i = 0; i < isChecked.length; i++) {
+      if (isChecked[i]) {
+        result +=
+            carts.elementAt(i).product.price * carts.elementAt(i).quantity;
+        quantity += carts.elementAt(i).quantity;
+      }
+    }
+    totalPrice.value = result;
+    totalQuantity.value = quantity;
   }
 
   Future<void> fetch() async {

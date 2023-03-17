@@ -1,3 +1,5 @@
+import 'package:ecoplants/controller/community_controller.dart';
+import 'package:ecoplants/model/community.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ class KomunitasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final communityController = CommunityController.i;
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () => Get.toNamed(Routes.daftarKomunitas),
@@ -38,22 +41,32 @@ class KomunitasPage extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           ),
         ),
-        body: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            itemBuilder: (context, index) => KomunitasItem(),
-            separatorBuilder: (context, index) => SizedBox(
-                  height: 21,
-                ),
-            itemCount: 10));
+        body: Obx(
+          () => communityController.isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                  itemBuilder: (context, index) {
+                    return KomunitasItem(
+                      community:
+                          communityController.communityList.elementAt(index),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(
+                        height: 21,
+                      ),
+                  itemCount: communityController.communityList.length),
+        ));
   }
 }
 
 class KomunitasItem extends StatelessWidget {
-  const KomunitasItem({
-    super.key,
-  });
-
+  const KomunitasItem({super.key, required this.community});
+  final Community community;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,9 +82,13 @@ class KomunitasItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Komunitas Pecinta Alam Malang',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+              Expanded(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  community.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 10),
+                ),
               ),
               Text(
                 'Terverifikasi',
@@ -88,9 +105,9 @@ class KomunitasItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 40,
-                backgroundImage: AssetImage('assets/images/impala.jpg'),
+                backgroundImage: NetworkImage(community.picture),
               ),
               const SizedBox(
                 width: 16,
@@ -106,7 +123,7 @@ class KomunitasItem extends StatelessWidget {
                           TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Komunitas Pecinta Alam yang berpartisipasi dalam berbagai kegiatan sosial di Malang Raya.',
+                      community.description,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5), fontSize: 10),
                     ),
@@ -116,7 +133,7 @@ class KomunitasItem extends StatelessWidget {
                           TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '100 Anggota',
+                      '${community.numMember} Anggota',
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5), fontSize: 10),
                     ),
@@ -132,12 +149,12 @@ class KomunitasItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Kegiatan',
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '5 Kegiatan Donasi',
+                    '${community.activites.length} Kegiatan Donasi',
                     style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,

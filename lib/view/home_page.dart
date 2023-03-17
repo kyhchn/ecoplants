@@ -17,9 +17,10 @@ import 'widgets/custom_appbar.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final list = [
-    'assets/images/banner.png',
-    'assets/images/banner.png',
-    'assets/images/banner.png'
+    'assets/images/banner1.png',
+    'assets/images/banner2.png',
+    'assets/images/banner3.png',
+    'assets/images/banner4.png'
   ];
   @override
   Widget build(BuildContext context) {

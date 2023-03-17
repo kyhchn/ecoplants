@@ -1,5 +1,5 @@
 import 'package:ecoplants/bindings/carousel_binding.dart';
-import 'package:ecoplants/bindings/cart_binding.dart';
+import 'package:ecoplants/bindings/community_binding.dart';
 import 'package:ecoplants/bindings/daftar_komunitas_binding.dart';
 import 'package:ecoplants/bindings/donate_binding.dart';
 import 'package:ecoplants/bindings/home_binding.dart';
@@ -46,6 +46,7 @@ class Routes {
     GetPage(
       name: komunitas,
       page: () => KomunitasPage(),
+      binding: CommunityBinding(),
     ),
     GetPage(
       name: editProfileField,
@@ -60,7 +61,7 @@ class Routes {
         page: () => DonationPaymentCountdownPage()),
     GetPage(
         name: donationDetail,
-        page: () => const DonationDetailPage(),
+        page: () => DonationDetailPage(),
         binding: DonateBinding()),
     GetPage(
         name: carousel, page: () => CarouselPage(), binding: CarouselBinding()),
@@ -78,18 +79,15 @@ class Routes {
         page: () => const RegisterPage(),
         binding: RegisterBinding()),
     GetPage(
-        name: homepage,
-        page: () => HomePage(),
-        binding: HomeBinding(),
-        transition: Transition.native,
-        transitionDuration: const Duration(milliseconds: 500)),
+      name: homepage,
+      page: () => HomePage(),
+      binding: HomeBinding(),
+    ),
     GetPage(name: search, page: () => SearchProductPage()),
     GetPage(name: detailProduct, page: () => DetailProductPage()),
     GetPage(
-        name: cart,
-        page: () => const CartPage(),
-        binding: CartBinding(),
-        transition: Transition.native,
-        transitionDuration: const Duration(milliseconds: 500))
+      name: cart,
+      page: () => const CartPage(),
+    )
   ];
 }

@@ -1,5 +1,5 @@
-class AutoGenerate {
-  AutoGenerate({
+class Community {
+  Community({
     required this.iD,
     required this.createdAt,
     required this.updatedAt,
@@ -24,7 +24,7 @@ class AutoGenerate {
   late List<dynamic> activites;
   late String document;
 
-  AutoGenerate.fromJson(Map<String, dynamic> json) {
+  Community.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     createdAt = json['CreatedAt'];
     updatedAt = json['UpdatedAt'];
@@ -34,7 +34,8 @@ class AutoGenerate {
     description = json['description'];
     phone = json['phone'];
     numMember = json['num_member'];
-    activites = List.castFrom<dynamic, dynamic>(json['activites']);
+    activites = List.castFrom<dynamic, dynamic>(
+        json['activites'] ?? []);
     document = json['document'];
   }
 

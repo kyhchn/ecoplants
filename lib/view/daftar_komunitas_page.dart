@@ -327,16 +327,29 @@ class DaftarKomunitasPage extends StatelessWidget {
                           onPressed: controller.index.value == 0
                               ? () => controller.index.value = 1
                               : controller.isValid.value
-                                  ? () {}
+                                  ? () async {
+                                      await controller.register();
+                                    }
                                   : null,
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
-                          child: const Text(
-                            'Daftar Komunitas',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          child: Obx(
+                            () => controller.isLoading.value
+                                ? const Center(
+                                    child: SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : const Text(
+                                    'Daftar Komunitas',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                           )),
                     ),
                   ),

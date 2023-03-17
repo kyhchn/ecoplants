@@ -1,4 +1,5 @@
 import 'package:ecoplants/controller/donate_controller.dart';
+import 'package:ecoplants/model/donation.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
@@ -6,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DonationDetailPage extends StatelessWidget {
-  const DonationDetailPage({super.key});
-
+  DonationDetailPage({super.key});
+  Donation donation = Get.arguments['donation'];
   @override
   Widget build(BuildContext context) {
     final controller = DonateController.i;
@@ -35,8 +36,8 @@ class DonationDetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            'assets/images/reforestation.jpg',
+          Image.network(
+            donation.picture,
             height: 200,
             fit: BoxFit.cover,
             width: double.infinity,
@@ -47,15 +48,15 @@ class DonationDetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Donasi Penghijauan Hutan Tretes Jawa Timur',
-                  style: TextStyle(fontSize: 16),
+                Text(
+                  donation.name,
+                  style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  Utils.convertToIdr(40000000),
+                  Utils.convertToIdr(donation.wallet),
                   style: TextStyle(
                       color: Utils.primaryColor,
                       fontSize: 16,
@@ -65,7 +66,7 @@ class DonationDetailPage extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  'Terkumpul dari ${Utils.convertToIdr(100000000)}',
+                  'Terkumpul dari ${Utils.convertToIdr(donation.target)}',
                   style: const TextStyle(fontSize: 12),
                 ),
                 const SizedBox(
@@ -74,7 +75,8 @@ class DonationDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: (size.width - 32) * 0.4,
+                      width: (size.width - 32) *
+                          (donation.wallet / donation.target),
                       color: Utils.primaryColor,
                       height: 4,
                     ),
@@ -90,16 +92,16 @@ class DonationDetailPage extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      '100 Donasi',
-                      style: TextStyle(
+                      '${donation.numDonate} Donasi',
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                     ),
                     Text(
-                      '30 Hari',
-                      style: TextStyle(
+                      '${donation.remainDay} Hari',
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                     )
@@ -245,7 +247,9 @@ class DonationDetailPage extends StatelessWidget {
                                       ? PaymentMethodPickerBody(
                                           controller: controller)
                                       : ValidateDonatePaymentBody(
-                                          controller: controller)),
+                                          controller: controller,
+                                          donation: donation,
+                                        )),
                         ),
                       ).then((value) => controller.onCloseModal()),
                       style: ElevatedButton.styleFrom(
@@ -271,13 +275,11 @@ class DonationDetailPage extends StatelessWidget {
 }
 
 class ValidateDonatePaymentBody extends StatelessWidget {
-  const ValidateDonatePaymentBody({
-    super.key,
-    required this.controller,
-  });
+  const ValidateDonatePaymentBody(
+      {super.key, required this.controller, required this.donation});
 
   final DonateController controller;
-
+  final Donation donation;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -394,10 +396,18 @@ class ValidateDonatePaymentBody extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   padding: const EdgeInsets.symmetric(vertical: 14)),
-              onPressed: () {
-                controller.isSubmit.value = true;
-                Get.back();
-                Get.toNamed(Routes.donationPaymentCountdown);
+              onPressed: () async {
+                final data = await controller.checkOut(donation.iD);
+                if (data != null) {
+                  controller.isSubmit.value = true;
+                  Get.back();
+                  Get.toNamed(Routes.donationPaymentCountdown,
+                      arguments: {'donationTransaction': data});
+                } else {
+                  Get.back();
+                  Get.showSnackbar(
+                      Utils.getSnackBar('gagal melakukan pembayaran'));
+                }
               },
               child: const Text(
                 'Bayar',

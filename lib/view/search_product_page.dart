@@ -11,7 +11,7 @@ class SearchProductPage extends StatelessWidget {
   SearchProductPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SearchController(str: Get.arguments['search']));
+    final controller = Get.put(SearchController(str: Get.arguments['search']??''));
     final size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,

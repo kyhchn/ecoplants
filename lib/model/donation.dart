@@ -1,3 +1,5 @@
+import 'package:ecoplants/model/community.dart';
+
 class Donation {
   Donation({
     required this.iD,
@@ -13,6 +15,7 @@ class Donation {
     required this.plan,
     required this.news,
     required this.picture,
+    required this.community,
   });
   late int iD;
   late String createdAt;
@@ -27,8 +30,10 @@ class Donation {
   late String plan;
   late String news;
   late String picture;
+  late Community community;
 
   Donation.fromJson(Map<String, dynamic> json) {
+    community = Community.fromJson(json['community']);
     iD = json['ID'];
     createdAt = json['CreatedAt'];
     updatedAt = json['UpdatedAt'];
@@ -47,6 +52,7 @@ class Donation {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['ID'] = iD;
+    _data['community'] = community;
     _data['CreatedAt'] = createdAt;
     _data['UpdatedAt'] = updatedAt;
     _data['name'] = name;
