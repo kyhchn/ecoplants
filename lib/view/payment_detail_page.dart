@@ -1,4 +1,5 @@
 import 'package:ecoplants/controller/payment_detail_controller.dart';
+import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/information_body.dart';
@@ -10,14 +11,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class PaymentDetailPage extends StatelessWidget {
-  const PaymentDetailPage({super.key});
-
+  PaymentDetailPage({super.key});
+  final Product product = Get.arguments['product'];
+  int quantity = Get.arguments['quantity'];
   @override
   Widget build(BuildContext context) {
     final controller = PaymentDetailController.i;
     return WillPopScope(
       onWillPop: () async {
-        controller.index.value != 0 ? controller.index.value-- : null;
+        controller.index.value != 0 ? controller.index.value-- : Get.back();
         return false;
       },
       child: Scaffold(
@@ -44,7 +46,10 @@ class PaymentDetailPage extends StatelessWidget {
             StatusBar(controller: controller),
             Utils.verticalSeparator,
             Obx(() => controller.index.value == 0
-                ? Expanded(child: InformationBody(controller: controller))
+                ? Expanded(
+                    child: InformationBody(
+                    controller: controller,
+                  ))
                 : controller.index.value == 1
                     ? Expanded(
                         child: ShippingBody(controller: controller),
@@ -86,8 +91,8 @@ class PaymentDetailPage extends StatelessWidget {
                                 Obx(
                                   () => Text(
                                     controller.shippingIsValid.value
-                                        ? 'Total: ${Utils.convertToIdr(controller.listShippingMethod.elementAt(controller.shippingMethod.value).price + 300000)}'
-                                        : Utils.convertToIdr(300000),
+                                        ? 'Total: ${Utils.convertToIdr(controller.listShippingMethod.elementAt(controller.shippingMethod.value).price + (product.price))}'
+                                        : Utils.convertToIdr(product.price),
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -107,7 +112,8 @@ class PaymentDetailPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       backgroundColor: Utils.primaryColor),
-                                  onPressed: controller.getOnPressedFunction(),
+                                  onPressed: controller.getOnPressedFunction(
+                                      quantity, product.iD),
                                   child: Text(
                                     controller.index.value == 0
                                         ? 'Lanjut Pilih Pengiriman'

@@ -51,16 +51,16 @@ class PaymentBody extends StatelessWidget {
                 Utils.verticalSeparator,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Naruto Uzumaki',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.nameController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '087387283123',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.telpNumberController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     )
                   ],
                 ),
@@ -88,9 +88,10 @@ class PaymentBody extends StatelessWidget {
                   ],
                 ),
                 Utils.verticalSeparator,
-                const Text(
-                  'Jl. Mt Haryono Gg Brawijaya 10 Rt10/Rw02, Lowokwaru, Malang, Jawa Timur. 62315',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                Text(
+                  '${controller.addressController.text}, ${controller.cityAndSubDistrictController.text}, ${controller.provinceController.text}, ${controller.postalCodeController.text}',
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 Utils.verticalSeparator,
                 Container(
@@ -167,15 +168,15 @@ class PaymentBody extends StatelessWidget {
           PaymentItem(
               controller: controller,
               asset: 'assets/images/bca.png',
-              value: 'Bank BCA'),
+              value: 'BCA'),
           PaymentItem(
               controller: controller,
               asset: 'assets/images/bri.png',
-              value: 'Bank BRI'),
+              value: 'BRI'),
           PaymentItem(
             controller: controller,
             asset: 'assets/images/mandiri.png',
-            value: 'Bank MANDIRI',
+            value: 'MANDIRI',
           )
         ],
       ),
@@ -217,7 +218,7 @@ class PaymentItem extends StatelessWidget {
                 width: 16,
               ),
               Text(
-                value,
+                "Bank $value",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),

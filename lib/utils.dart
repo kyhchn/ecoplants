@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Utils {
   static MaterialColor primaryColor = const MaterialColor(0xFF4A9C80, {
@@ -27,5 +28,12 @@ class Utils {
           (match) => '${match.group(1)}.',
         )}';
     return result;
+  }
+
+  static GetSnackBar getSnackBar(String message) {
+    return GetSnackBar(
+      message: message,
+      duration: const Duration(seconds: 2),
+    );
   }
 }

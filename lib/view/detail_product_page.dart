@@ -1,3 +1,4 @@
+import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/controller/search_controller.dart';
 import 'package:ecoplants/model/product.dart';
@@ -99,7 +100,7 @@ class DetailProductPage extends StatelessWidget {
                         height: 6,
                       ),
                       Text(
-                        'Jakarta Timur | Kebayoran Lama',
+                        '${product.regency} | ${product.district}',
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.5), fontSize: 10),
                       ),
@@ -486,7 +487,8 @@ class DetailProductPage extends StatelessWidget {
                             side:
                                 BorderSide(color: Utils.primaryColor, width: 1),
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () => Get.toNamed(Routes.paymentDetail),
+                    onPressed: () => Get.toNamed(Routes.paymentDetail,
+                        arguments: {'product': product, 'quantity': 1}),
                     child: Text(
                       'Beli Langsung',
                       style: TextStyle(
@@ -501,7 +503,18 @@ class DetailProductPage extends StatelessWidget {
                             vertical: 6, horizontal: 12),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () async {
+                      final cartController = CartController.i;
+                      final isSuccess =
+                          await cartController.addToCart(product.iD);
+                      if (isSuccess) {
+                        Get.showSnackbar(Utils.getSnackBar(
+                            'berhasil menambahkan ke keranjang'));
+                      } else {
+                        Get.showSnackbar(Utils.getSnackBar(
+                            'gagal menambahkan ke keranjang'));
+                      }
+                    },
                     child: const Text(
                       'Keranjang',
                       style: TextStyle(

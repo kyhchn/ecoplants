@@ -1,7 +1,6 @@
 import 'package:ecoplants/controller/login_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
-import 'package:ecoplants/view/home_page.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

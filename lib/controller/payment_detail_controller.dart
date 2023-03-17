@@ -1,4 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecoplants/controller/home_controller.dart';
+import 'package:ecoplants/model/transaction.dart';
+import 'package:ecoplants/routes.dart';
+import 'package:ecoplants/services/transaction_service.dart';
+import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,9 +22,10 @@ class PaymentDetailController extends GetxController {
   final notesController = TextEditingController();
   final paymentMethod = ''.obs;
   Rx<int> shippingMethod = 4.obs;
+  final isLoading = false.obs;
   final listShippingMethod = <ShippingMethod>[
     ShippingMethod(company: 'JNE Regular', price: 18000, maxDay: 5, minDay: 3),
-    ShippingMethod(company: 'J&t Express', price: 20000, maxDay: 5, minDay: 3),
+    ShippingMethod(company: 'J&T Express', price: 20000, maxDay: 5, minDay: 3),
     ShippingMethod(
         company: 'Sicepat Ekonomi', price: 12000, maxDay: 7, minDay: 5),
   ];
@@ -41,7 +46,15 @@ class PaymentDetailController extends GetxController {
     super.dispose();
   }
 
-  void Function()? getOnPressedFunction() {
+  Future<Transaction?> checkOut(int quantity, int productId) async {
+    isLoading(true);
+    final transaction = await TransactionService().checkOut(
+        paymentMethod.value, quantity, productId, shippingMethod.value);
+    isLoading(false);
+    return transaction;
+  }
+
+  void Function()? getOnPressedFunction(int quantity, int productId) {
     if (index.value == 0) {
       if (informationIsValid.value) {
         return () => index.value = 1;
@@ -52,7 +65,14 @@ class PaymentDetailController extends GetxController {
       }
     } else if (index.value == 2) {
       if (paymentIsValid.value) {
-        return () => index.value = 3;
+        return () async {
+          final transaction = await checkOut(quantity, productId);
+          if (transaction != null) {
+            index.value = 3;
+          } else {
+            Get.showSnackbar(Utils.getSnackBar('Gagal Melakukan Pembayaran'));
+          }
+        };
       }
     }
     return null;

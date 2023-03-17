@@ -1,15 +1,12 @@
 import 'package:ecoplants/controller/payment_detail_controller.dart';
+import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 
 class InformationBody extends StatelessWidget {
-  const InformationBody({
-    super.key,
-    required this.controller,
-  });
+  const InformationBody({super.key, required this.controller});
 
   final PaymentDetailController controller;
-
   @override
   Widget build(BuildContext context) {
     return ListView(

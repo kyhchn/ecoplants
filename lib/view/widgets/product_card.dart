@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
                               fontSize: 10),
                         ),
                         Text(
-                          'dummy location',
+                          'Kota ${product.regency}',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontWeight: FontWeight.w400,
@@ -74,7 +74,7 @@ class ProductCard extends StatelessWidget {
                               size: 10,
                             ),
                             Text(
-                              '${product.rating} | Terjual dummy',
+                              '${product.rating} | Terjual 10',
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.5),
                                   fontWeight: FontWeight.w500,

@@ -1,60 +1,70 @@
+import 'package:ecoplants/controller/user_controller.dart';
+import 'package:ecoplants/routes.dart';
+import 'package:ecoplants/services/cache_service.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userController = UserController.i;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                backgroundImage: AssetImage('assets/images/dummy_profile.png'),
-                radius: 25,
-              ),
-              const SizedBox(
-                width: 23,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Ikbal Marwan',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+          child: Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/dummy_profile.png'),
+                  radius: 25,
+                ),
+                const SizedBox(
+                  width: 23,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userController.user.value.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '0857555531341',
-                    style: TextStyle(
-                        fontSize: 10, color: Colors.black.withOpacity(0.6)),
-                  ),
-                  Text(
-                    'ikbale@gmail.com',
-                    style: TextStyle(
-                        fontSize: 10, color: Colors.black.withOpacity(0.6)),
-                  )
-                ],
-              ),
-              const Spacer(),
-              IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.edit_outlined,
-                    size: 24,
-                  ))
-            ],
+                    Text(
+                      userController.user.value.phone.isNotEmpty
+                          ? userController.user.value.name
+                          : '-',
+                      style: TextStyle(
+                          fontSize: 10, color: Colors.black.withOpacity(0.6)),
+                    ),
+                    Text(
+                      userController.user.value.email,
+                      style: TextStyle(
+                          fontSize: 10, color: Colors.black.withOpacity(0.6)),
+                    )
+                  ],
+                ),
+                const Spacer(),
+                IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () => Get.toNamed(Routes.editProfile),
+                    icon: const Icon(
+                      Icons.edit_outlined,
+                      size: 24,
+                    ))
+              ],
+            ),
           ),
         ),
         Utils.verticalSeparator,
@@ -135,10 +145,17 @@ class ProfileBody extends StatelessWidget {
         Utils.verticalSeparator,
         CustomTile(
             text: 'Keluar Akun',
-            actions: Icon(
-              Icons.login,
-              size: 24,
-              color: Utils.red.withOpacity(0.8),
+            actions: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () async {
+                await CacheService.storage.remove('token');
+                Get.offAllNamed(Routes.carousel);
+              },
+              child: Icon(
+                Icons.login,
+                size: 24,
+                color: Utils.red.withOpacity(0.8),
+              ),
             )),
         Utils.verticalSeparator,
       ],

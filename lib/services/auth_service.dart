@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecoplants/services/cache_service.dart';
 import 'package:ecoplants/utils.dart';
+import 'package:get/get.dart';
 
 class AuthService {
   final dio = Dio();
@@ -14,9 +15,18 @@ class AuthService {
       if (token != null) {
         await CacheService.storage.write('token', token);
         return true;
+      } else {
+        final message = response.data['message'];
+        Get.showSnackbar(GetSnackBar(
+          message: message,
+          duration: const Duration(seconds: 2),
+        ));
       }
     } on DioError catch (e) {
-      print(e.message);
+      Get.showSnackbar(GetSnackBar(
+        message: e.message,
+        duration: const Duration(seconds: 2),
+      ));
     }
     return false;
   }
@@ -35,9 +45,18 @@ class AuthService {
       if (response.data != null && response.data['status'] == 'success') {
         bool canLogin = await login(email, password);
         return canLogin;
+      } else {
+        final message = response.data['message'];
+        Get.showSnackbar(GetSnackBar(
+          message: message,
+          duration: const Duration(seconds: 2),
+        ));
       }
     } on DioError catch (e) {
-      print(e.message);
+      Get.showSnackbar(GetSnackBar(
+        message: e.message,
+        duration: const Duration(seconds: 2),
+      ));
     }
     return false;
   }

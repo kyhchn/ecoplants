@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecoplants/controller/home_controller.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
 import 'package:ecoplants/view/widgets/top_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class HomeBody extends StatelessWidget {
@@ -99,7 +101,6 @@ class HomeBody extends StatelessWidget {
                           viewportFraction: 0.5,
                           initialPage: list.length ~/ 2,
                           height: 243,
-                          
                           enableInfiniteScroll: false,
                           scrollDirection: Axis.horizontal,
                         )),
@@ -172,13 +173,21 @@ class HomeBody extends StatelessWidget {
                 asset: 'assets/images/promo_icon.png',
                 title: 'Promo',
               ),
-              TopCard(
-                asset: 'assets/images/donasi_icon.png',
-                title: 'Donasi',
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => controller.index.value = 1,
+                child: TopCard(
+                  asset: 'assets/images/donasi_icon.png',
+                  title: 'Peduli',
+                ),
               ),
-              TopCard(
-                asset: 'assets/images/komunitas_icon.png',
-                title: 'Komunitas',
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: ()=> Get.toNamed(Routes.komunitas),
+                child: TopCard(
+                  asset: 'assets/images/komunitas_icon.png',
+                  title: 'Komunitas',
+                ),
               ),
             ],
           ),

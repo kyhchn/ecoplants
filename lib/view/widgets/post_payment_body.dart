@@ -41,26 +41,21 @@ class PostPaymentBody extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           color: Colors.black.withOpacity(0.5)),
                     ),
-                    CustomTextButton(
-                        content: 'Ubah',
-                        textStyle:
-                            TextStyle(fontSize: 12, color: Utils.primaryColor),
-                        onPressed: () => controller.index.value = 0)
                   ],
                 ),
                 Utils.verticalSeparator,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Naruto Uzumaki',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.nameController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '087387283123',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.telpNumberController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     )
                   ],
                 ),
@@ -80,17 +75,13 @@ class PostPaymentBody extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           color: Colors.black.withOpacity(0.5)),
                     ),
-                    CustomTextButton(
-                        content: 'Ubah',
-                        textStyle:
-                            TextStyle(fontSize: 12, color: Utils.primaryColor),
-                        onPressed: () => controller.index.value = 0)
                   ],
                 ),
                 Utils.verticalSeparator,
-                const Text(
-                  'Jl. Mt Haryono Gg Brawijaya 10 Rt10/Rw02, Lowokwaru, Malang, Jawa Timur. 62315',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                Text(
+                  '${controller.addressController.text}, ${controller.cityAndSubDistrictController.text}, ${controller.provinceController.text}, ${controller.postalCodeController.text}',
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 Utils.verticalSeparator,
                 Container(
@@ -109,13 +100,6 @@ class PostPaymentBody extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w600),
                     ),
-                    CustomTextButton(
-                        content: 'Ubah',
-                        textStyle: TextStyle(
-                            color: Utils.primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600),
-                        onPressed: () => controller.index.value = 1),
                     Utils.verticalSeparator,
                   ],
                 ),

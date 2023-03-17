@@ -51,16 +51,16 @@ class ShippingBody extends StatelessWidget {
                 Utils.verticalSeparator,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Naruto Uzumaki',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.nameController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '087387283123',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      controller.telpNumberController.text,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     )
                   ],
                 ),
@@ -83,9 +83,10 @@ class ShippingBody extends StatelessWidget {
                   ],
                 ),
                 Utils.verticalSeparator,
-                const Text(
-                  'Jl. Mt Haryono Gg Brawijaya 10 Rt10/Rw02, Lowokwaru, Malang, Jawa Timur. 62315',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                Text(
+                  '${controller.addressController.text}, ${controller.cityAndSubDistrictController.text}, ${controller.provinceController.text}, ${controller.postalCodeController.text}',
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w600),
                 )
               ],
             ),
@@ -108,7 +109,7 @@ class ShippingBody extends StatelessWidget {
               value: 1,
               price: 20000,
               subtitle: 'Estimasi 3-5 Hari',
-              title: 'J&t Express'),
+              title: 'J&T Express'),
           Utils.verticalSeparator,
           ShippingMethodItem(
             controller: controller,

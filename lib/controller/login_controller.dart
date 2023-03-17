@@ -1,5 +1,4 @@
 import 'package:ecoplants/services/auth_service.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,12 +27,6 @@ class LoginController extends GetxController {
     bool isSuccess = await AuthService().login(
         emailorUsernameEditingController.text, passwordEditingController.text);
     isLoading(false);
-    if (!isSuccess) {
-      Get.showSnackbar(const GetSnackBar(
-        message: 'failed to login',
-        duration: Duration(seconds: 3),
-      ));
-    }
     return isSuccess;
   }
 }

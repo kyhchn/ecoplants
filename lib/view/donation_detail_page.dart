@@ -1,4 +1,5 @@
 import 'package:ecoplants/controller/donate_controller.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_textbutton.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class DonationDetailPage extends StatelessWidget {
     final controller = DonateController.i;
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -225,176 +227,27 @@ class DonationDetailPage extends StatelessWidget {
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
-                        builder: (context) => Container(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, top: 38, bottom: 18),
-                            height: size.height * 0.77,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
+                        builder: (context) => Obx(
+                          () => Container(
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, top: 38, bottom: 18),
+                              height: size.height * 0.77,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'Pilih Nominal Donasi',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                Column(
-                                  children: [
-                                    NominalTile(
-                                      amount: 5000,
-                                      controller: controller,
-                                    ),
-                                    NominalTile(
-                                      amount: 10000,
-                                      controller: controller,
-                                    ),
-                                    NominalTile(
-                                      amount: 20000,
-                                      controller: controller,
-                                    ),
-                                    NominalTile(
-                                      amount: 50000,
-                                      controller: controller,
-                                    ),
-                                    NominalTile(
-                                      amount: 100000,
-                                      controller: controller,
-                                    ),
-                                    NominalTile(
-                                      amount: 1000000,
-                                      controller: controller,
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 16,
-                                  ),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: Colors.black.withOpacity(0.1),
-                                          width: 1)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 12.5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const Text(
-                                              'Nominal Donasi Lainnya',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              size: 14,
-                                              color:
-                                                  Colors.black.withOpacity(0.2),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: double.infinity,
-                                        height: 41,
-                                        child: TextField(
-                                          onChanged: (value) {
-                                            controller.amount.value =
-                                                int.parse(value);
-                                          },
-                                          controller:
-                                              controller.amountController,
-                                          style: TextStyle(
-                                              color:
-                                                  Colors.black.withOpacity(0.5),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 12.5,
-                                                    horizontal: 16),
-                                            prefixText: 'Rp   ',
-                                            prefixStyle: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                            fillColor: controller
-                                                    .amountController
-                                                    .value
-                                                    .text
-                                                    .isNotEmpty
-                                                ? Utils.primaryColor
-                                                    .withOpacity(0.2)
-                                                : Colors.black.withOpacity(0.1),
-                                            filled: true,
-                                            border: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(
-                                        'Min Rp5.000',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color:
-                                                Colors.black.withOpacity(0.5)),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Spacer(),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Obx(
-                                    () => ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 14)),
-                                        onPressed: controller.amount.value != 0
-                                            ? () {}
-                                            : null,
-                                        child: Text(
-                                          'Lanjut Pilih Pembayaran',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                        )),
-                                  ),
-                                )
-                              ],
-                            )),
-                      ),
+                              child: controller.index.value == 0
+                                  ? AmountPickerBody(controller: controller)
+                                  : controller.index.value == 1
+                                      ? PaymentMethodPickerBody(
+                                          controller: controller)
+                                      : ValidateDonatePaymentBody(
+                                          controller: controller)),
+                        ),
+                      ).then((value) => controller.onCloseModal()),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -413,6 +266,422 @@ class DonationDetailPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ValidateDonatePaymentBody extends StatelessWidget {
+  const ValidateDonatePaymentBody({
+    super.key,
+    required this.controller,
+  });
+
+  final DonateController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Center(
+          child: Text(
+            'Nominal Donasi',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(
+          height: 24,
+        ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(color: Colors.black.withOpacity(0.1), width: 1)),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 41,
+            decoration: BoxDecoration(
+                color: Utils.primaryColor.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Rp',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(
+                  controller.amount.value.toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black.withOpacity(0.5)),
+                )
+              ],
+            ),
+          ),
+        ),
+        Utils.verticalSeparator,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(color: Colors.black.withOpacity(0.1), width: 1)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/${controller.paymentMethod.value.toLowerCase()}.png',
+                height: 48,
+                width: 48,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Text(
+                'Bank ${controller.paymentMethod.value}',
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const Spacer(),
+              CustomTextButton(
+                  content: 'Ganti',
+                  textStyle: TextStyle(
+                      color: Utils.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                  onPressed: () => controller.index.value = 1)
+            ],
+          ),
+        ),
+        Utils.verticalSeparator,
+        Text(
+          'Berdoa di donasi ini (opsional)',
+          style: TextStyle(
+              color: Colors.black.withOpacity(0.3),
+              fontSize: 12,
+              fontWeight: FontWeight.w500),
+        ),
+        Utils.verticalSeparator,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(color: Colors.black.withOpacity(0.1), width: 1)),
+          child: Text(
+            'Tulis doa untuk penggalang dana atau dirimu sendiri disini. Biar doa kamu bisa dilihat dan diamini oleh #orangbaik lainnya.',
+            style: TextStyle(
+                color: Colors.black.withOpacity(0.3),
+                fontSize: 12,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
+        const Spacer(),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  padding: const EdgeInsets.symmetric(vertical: 14)),
+              onPressed: () {
+                controller.isSubmit.value = true;
+                Get.back();
+                Get.toNamed(Routes.donationPaymentCountdown);
+              },
+              child: const Text(
+                'Bayar',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              )),
+        )
+      ],
+    );
+  }
+}
+
+class PaymentMethodPickerBody extends StatelessWidget {
+  const PaymentMethodPickerBody({
+    super.key,
+    required this.controller,
+  });
+
+  final DonateController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Pilih Nominal Donasi',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 24,
+        ),
+        PaymentItem(
+            controller: controller,
+            asset: 'assets/images/bca.png',
+            value: 'BCA'),
+        PaymentItem(
+            controller: controller,
+            asset: 'assets/images/bri.png',
+            value: 'BRI'),
+        PaymentItem(
+          controller: controller,
+          asset: 'assets/images/mandiri.png',
+          value: 'MANDIRI',
+        ),
+        PaymentItem(
+          controller: controller,
+          asset: 'assets/images/bni.png',
+          value: 'BNI',
+        ),
+        PaymentItem(
+          controller: controller,
+          asset: 'assets/images/cimbniaga.png',
+          value: 'CIMBNIAGA',
+        ),
+        const Spacer(),
+        SizedBox(
+          width: double.infinity,
+          child: Obx(
+            () => ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(vertical: 14)),
+                onPressed: controller.paymentMethod.value != ''
+                    ? () => controller.index.value = 2
+                    : null,
+                child: const Text(
+                  'Lanjut Bayar',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                )),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class AmountPickerBody extends StatelessWidget {
+  const AmountPickerBody({
+    super.key,
+    required this.controller,
+  });
+
+  final DonateController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Pilih Nominal Donasi',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 18,
+        ),
+        Column(
+          children: [
+            NominalTile(
+              amount: 5000,
+              controller: controller,
+            ),
+            NominalTile(
+              amount: 10000,
+              controller: controller,
+            ),
+            NominalTile(
+              amount: 20000,
+              controller: controller,
+            ),
+            NominalTile(
+              amount: 50000,
+              controller: controller,
+            ),
+            NominalTile(
+              amount: 100000,
+              controller: controller,
+            ),
+            NominalTile(
+              amount: 1000000,
+              controller: controller,
+            )
+          ],
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(color: Colors.black.withOpacity(0.1), width: 1)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 12.5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Nominal Donasi Lainnya',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 14,
+                      color: Colors.black.withOpacity(0.2),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 41,
+                child: TextField(
+                  onChanged: (value) {
+                    controller.amount.value = int.parse(value);
+                  },
+                  controller: controller.amountController,
+                  style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.5, horizontal: 16),
+                    prefixText: 'Rp   ',
+                    prefixStyle: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                    fillColor: controller.amountController.value.text.isNotEmpty
+                        ? Utils.primaryColor.withOpacity(0.2)
+                        : Colors.black.withOpacity(0.1),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                'Min Rp5.000',
+                style: TextStyle(
+                    fontSize: 12, color: Colors.black.withOpacity(0.5)),
+              )
+            ],
+          ),
+        ),
+        const Spacer(),
+        SizedBox(
+          width: double.infinity,
+          child: Obx(
+            () => ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(vertical: 14)),
+                onPressed: controller.amount.value != 0
+                    ? () => controller.index.value = 1
+                    : null,
+                child: const Text(
+                  'Lanjut Pilih Pembayaran',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                )),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class PaymentItem extends StatelessWidget {
+  PaymentItem(
+      {super.key,
+      required this.controller,
+      required this.asset,
+      required this.value});
+  String value, asset;
+  final DonateController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          height: 64,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(width: 1, color: Colors.black.withOpacity(0.1))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                asset,
+                height: 48,
+                width: 48,
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Text(
+                'Bank $value',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const Spacer(),
+              Obx(
+                () => Radio(
+                  value: value,
+                  groupValue: controller.paymentMethod.value,
+                  onChanged: (value) {
+                    controller.paymentMethod.value = value!;
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        Utils.verticalSeparator
+      ],
     );
   }
 }
