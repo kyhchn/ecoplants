@@ -10,19 +10,6 @@ class HomeController extends GetxController {
   final isLoading = false.obs;
   var listReccomendedProduct = <Product>[].obs;
   var listPopularProduct = <Product>[].obs;
-  final list = [
-    'assets/images/banner.png',
-    'assets/images/banner.png',
-    'assets/images/banner.png'
-  ];
-
-  Future<void> fetchAllProduct() async {
-    isLoading(true);
-    final list = await ProductService().getAllProduct(20, 1);
-    listPopularProduct.value = list.sublist(0, 5);
-    listReccomendedProduct.value = list.sublist(5);
-    isLoading(false);
-  }
 
   @override
   void onInit() {
@@ -33,7 +20,14 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     searchController.dispose();
-    index.close();
     super.onClose();
+  }
+
+  Future<void> fetchAllProduct() async {
+    isLoading(true);
+    final list = await ProductService().getAllProduct(20, 1);
+    listPopularProduct.value = list.sublist(0, 5);
+    listReccomendedProduct.value = list.sublist(5);
+    isLoading(false);
   }
 }

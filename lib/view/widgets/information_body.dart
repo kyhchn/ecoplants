@@ -1,5 +1,4 @@
 import 'package:ecoplants/controller/payment_detail_controller.dart';
-import 'package:ecoplants/model/product.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
 

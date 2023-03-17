@@ -23,6 +23,7 @@ class RegisterController extends GetxController {
     passwordEditingController.dispose();
     usernameEditingController.dispose();
     verifPasswordEditingController.dispose();
+    nameEditingController.dispose();
     super.onClose();
   }
 

@@ -1,4 +1,6 @@
+import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/controller/search_controller.dart';
+import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/custom_appbar.dart';
 import 'package:ecoplants/view/widgets/product_card.dart';
@@ -8,10 +10,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SearchProductPage extends StatelessWidget {
-  SearchProductPage({super.key});
+  const SearchProductPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SearchController(str: Get.arguments['search']??''));
+    final cartController = CartController.i;
+    final controller =
+        Get.put(SearchController(str: Get.arguments['search'] ?? ''));
     final size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
@@ -30,9 +34,13 @@ class SearchProductPage extends StatelessWidget {
               backgroundColor: Colors.white,
               elevation: 0,
               actions: [
-                StackIcon(
-                    iconData: Icons.shopping_cart_checkout_outlined,
-                    quantity: 5),
+                Obx(
+                  () => StackIcon(
+                    iconData: Icons.shopping_cart_outlined,
+                    quantity: cartController.carts.length,
+                    onPressed: () => Get.toNamed(Routes.cart),
+                  ),
+                ),
                 const SizedBox(
                   width: 10,
                 ),

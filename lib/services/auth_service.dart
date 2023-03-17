@@ -23,9 +23,9 @@ class AuthService {
         ));
       }
     } on DioError catch (e) {
-      Get.showSnackbar(GetSnackBar(
-        message: e.message,
-        duration: const Duration(seconds: 2),
+      Get.showSnackbar(const GetSnackBar(
+        message: 'login gagal',
+        duration: Duration(seconds: 2),
       ));
     }
     return false;
@@ -53,9 +53,9 @@ class AuthService {
         ));
       }
     } on DioError catch (e) {
-      Get.showSnackbar(GetSnackBar(
-        message: e.message,
-        duration: const Duration(seconds: 2),
+      Get.showSnackbar(const GetSnackBar(
+        message: 'register gagal',
+        duration: Duration(seconds: 2),
       ));
     }
     return false;

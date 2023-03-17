@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:ecoplants/model/donation_transaction.dart';
 import 'package:ecoplants/services/donation_service.dart';
 import 'package:flutter/widgets.dart';
@@ -12,6 +10,12 @@ class DonateController extends GetxController {
   final amountController = TextEditingController();
   final paymentMethod = ''.obs;
   final isSubmit = false.obs;
+  
+  @override
+  void onClose() {
+    amountController.dispose();
+    super.onClose();
+  }
 
   void onCloseModal() {
     if (!isSubmit.value) {
@@ -40,11 +44,5 @@ class DonateController extends GetxController {
     final data = await DonationService()
         .checkOut(donationId, amount.value, getPaymentMethod());
     return data;
-  }
-
-  @override
-  void onClose() {
-    amountController.dispose();
-    super.onClose();
   }
 }

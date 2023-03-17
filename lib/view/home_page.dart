@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final controller = HomeController.i;
+    final cartController = CartController.i;
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
@@ -60,8 +62,13 @@ class HomePage extends StatelessWidget {
                         Icons.settings_outlined,
                       )),
                   StackIcon(quantity: 10, iconData: Icons.email_outlined),
-                  StackIcon(
-                      quantity: 10, iconData: Icons.shopping_cart_outlined),
+                  Obx(
+                    () => StackIcon(
+                      iconData: Icons.shopping_cart_outlined,
+                      quantity: cartController.carts.length,
+                      onPressed: () => Get.toNamed(Routes.cart),
+                    ),
+                  ),
                   const SizedBox(
                     width: 16,
                   )

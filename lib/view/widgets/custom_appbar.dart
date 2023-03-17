@@ -1,3 +1,4 @@
+import 'package:ecoplants/controller/cart_controller.dart';
 import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:ecoplants/view/widgets/stack_icon.dart';
@@ -9,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   void Function(String) onSubmitted;
   Color? textFieldColor;
   Widget? leadingWidget;
-  
+
   CustomAppBar({
     super.key,
     this.textFieldColor,
@@ -19,10 +20,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required TextEditingController searchController,
   }) : _searchController = searchController;
 
-
   final TextEditingController _searchController;
   @override
   Widget build(BuildContext context) {
+    final cartController = CartController.i;
     return AppBar(
       leading: leadingWidget,
       centerTitle: false,
@@ -68,10 +69,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             const SizedBox(
               width: 10,
             ),
-            StackIcon(
-              iconData: Icons.shopping_cart_outlined,
-              quantity: 5,
-              onPressed: () => Get.toNamed(Routes.cart),
+            Obx(
+              () => StackIcon(
+                iconData: Icons.shopping_cart_outlined,
+                quantity: cartController.carts.length,
+                onPressed: () => Get.toNamed(Routes.cart),
+              ),
             ),
             const SizedBox(
               width: 10,

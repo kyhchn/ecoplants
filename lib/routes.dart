@@ -41,11 +41,11 @@ class Routes {
   static List<GetPage> routes = [
     GetPage(
         name: daftarKomunitas,
-        page: () => DaftarKomunitasPage(),
+        page: () => const DaftarKomunitasPage(),
         binding: DaftarKomunitasBinding()),
     GetPage(
       name: komunitas,
-      page: () => KomunitasPage(),
+      page: () => const KomunitasPage(),
       binding: CommunityBinding(),
     ),
     GetPage(
@@ -54,7 +54,7 @@ class Routes {
     ),
     GetPage(
       name: editProfile,
-      page: () => EditProfilePage(),
+      page: () => const EditProfilePage(),
     ),
     GetPage(
         name: donationPaymentCountdown,
@@ -83,7 +83,7 @@ class Routes {
       page: () => HomePage(),
       binding: HomeBinding(),
     ),
-    GetPage(name: search, page: () => SearchProductPage()),
+    GetPage(name: search, page: () => const SearchProductPage()),
     GetPage(name: detailProduct, page: () => DetailProductPage()),
     GetPage(
       name: cart,

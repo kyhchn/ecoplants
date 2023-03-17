@@ -25,6 +25,7 @@ class CartController extends GetxController {
         return carts.elementAt(i);
       }
     }
+    return null;
   }
 
   Future<void> deleteItem(int id) async {

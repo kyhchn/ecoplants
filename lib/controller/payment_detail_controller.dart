@@ -1,6 +1,4 @@
-import 'package:ecoplants/controller/home_controller.dart';
 import 'package:ecoplants/model/transaction.dart';
-import 'package:ecoplants/routes.dart';
 import 'package:ecoplants/services/transaction_service.dart';
 import 'package:ecoplants/utils.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +30,6 @@ class PaymentDetailController extends GetxController {
 
   @override
   void dispose() {
-    index.close();
-    informationIsValid.close();
-    shippingIsValid.close();
-    paymentIsValid.close();
     nameController.dispose();
     telpNumberController.dispose();
     provinceController.dispose();

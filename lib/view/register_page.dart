@@ -160,7 +160,7 @@ class RegisterPage extends StatelessWidget {
 }
 
 class TextFieldObs extends StatelessWidget {
-  TextFieldObs(
+  const TextFieldObs(
       {super.key,
       required this.controller,
       required this.isObs,

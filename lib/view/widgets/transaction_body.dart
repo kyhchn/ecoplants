@@ -1,6 +1,5 @@
 import 'package:ecoplants/controller/donation_controller.dart';
 import 'package:ecoplants/controller/user_controller.dart';
-import 'package:ecoplants/model/donation.dart';
 import 'package:ecoplants/model/donation_transaction.dart';
 import 'package:ecoplants/model/transaction.dart';
 import 'package:ecoplants/utils.dart';
